@@ -1,2 +1,15 @@
-@import './common';
-@import './example';
+@import "./utils/reset";
+// @import "./utils/visually-hidden";
+@import "./utils/variables";
+@import "./utils/mixins";
+
+@import "./base/common";
+@import "./base/container";
+@import "./base/button";
+
+@import "./header";
+@import "./section-films";
+@import "./footer";
+@import "./btn";
+@import "./pagination";
+@import "./theme";

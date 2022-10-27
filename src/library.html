@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />  
+  <title>My library</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="./sass/index.scss" />
+  <script type="module" src="./library.js"></script>
+</head>
+
+<body>
+  <header class="library" id="home">
+    <div class="header__container container">
+      <div class="library__wrapper">
+        <a class="logo" href="./index.html" aria-label="Filmoteka logo">
+          <svg class="logo__icon" width="24px" height="24px">
+            <use href="./images/symbol-defs.svg#icon-film"></use>
+          </svg>
+          <span class="logo__text">Filmoteka</span>
+        </a>
+        <nav class="nav">
+          <ul class="nav__list nav__list-library">
+            <li class="nav__item">
+              <a class="nav__link" href="index.html">HOME</a>
+            </li>
+            <li class="nav__item active">
+              <a class="nav__link" href="./library.html">
+                MY LIBRARY
+              </a>
+            </li>
+            <form class="nav__form-log-out" method="LINK" action="index.html">
+              <input class="nav__item-button nav__item-log-out button" type="submit" value="log out" />
+            </form>
+          </ul>
+        </nav>
+      </div>
+      <div class="container toolbar-library">
+        <div class="theme-switch">
+          <svg class="theme-switch-icon" width="20px" height="20px" role="img" aria-label="Іконка сонця">
+            <use href="./images/symbol-defs.svg#sun"></use>
+          </svg>
+  
+          <div class="theme-switch-control">
+            <input class="theme-switch-toggle" type="checkbox" name="theme" id="theme-switch-toggle"
+              aria-label="Перемикач теми" />
+            <label aria-hidden="true" class="theme-switch-track" for="theme-switch-toggle"></label>
+            <div aria-hidden="true" class="theme-switch-marker"></div>
+          </div>
+  
+          <svg class="theme-switch-icon" width="20px" height="20px" aria-label="Іконка місяця">
+            <use href="./images/symbol-defs.svg#moon"></use>
+          </svg>
+        </div>
+      </div>
+      <div class="button-group">
+        <button class="button library__button is-active library__watched-btn" type="button" data-modal="watched">
+          WATCHED
+        </button>
+  
+        <button class="button library__button library__queue-btn" type="button" data-modal="queue">
+          QUEUE
+        </button>
+      </div>
+    </div>
+  </header>
+
+    <main>
+
+      <!-- ====================films-cards============================= -->
+      <section class="films">
+        <div class="films__container container">
+          <h1 class="visually-hidden">Library</h1>
+          <ul class="films__list js-films-list-library"></ul>
+        </div>
+      </section>
+
+      <!-- ==================== pagination ============================ -->
+      <div class="pagination">
+        <button class="pagination__button--arrow" type="button" aria-label="previous-page">
+          <svg width="16" height="16">
+            <use href="./images/symbol-defs.svg#icon-arrow-left2"></use>
+          </svg>
+        </button>
+        <div class="pagination__container--first-button"></div>
+        <div class="pagination__container--buttons"></div>
+        <div class="pagination__container--last-button"></div>
+        <button class="pagination__button--arrow" type="button" aria-label="next-page">
+          <svg width="16" height="16">
+            <use href="./images/symbol-defs.svg#icon-arrow-right2"></use>
+          </svg>
+        </button>
+      </div>
+    </main>
+
+    <!-- ================= footer ====================== -->
+    <footer>
+      <div class="footer__list">
+        <p class="footer__list-item">© 2022 | All Rights Reserved |</p>
+        <ul class="footer__wrap">
+          <li class="footer__list-item">Developed with</li>
+          <li>
+            <svg class="footer__list-icon">
+              <use href="./images/symbol-defs.svg#icon-heart"></use>
+            </svg>
+          </li>
+          <li class="footer__list-item">
+            by
+            <button type="button" class="footer__btn">GoIT Students</button>
+          </li>
+        </ul>
+      </div>
+    </footer>
+    
+</body>
+
+</html>
