@@ -13,7 +13,7 @@ export default class MovieApiService {
 
   async getMoviesList() {
     const response = await axios.get(
-      `${BASE_URL}/trending/movie/day?api_key=${API_KEY}`
+      `${BASE_URL}/trending/movie/day?api_key=${API_KEY}&page=${this.page}`
     );
     return response.data;
   }
