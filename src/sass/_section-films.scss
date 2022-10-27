@@ -1,0 +1,45 @@
+.films {
+  display: flex;
+  justify-content: center;
+
+  &__container {
+    margin-top: 20px;
+    margin-bottom: 20px;
+
+    @include mq(tablet) {
+      margin-top: 45px;
+      margin-bottom: 45px;
+    }
+  }
+
+  &__list {
+    @include mq(tablet) {
+      margin: -15px;
+
+      display: flex;
+      flex-wrap: wrap;
+    }
+  }
+
+  &__item:not(:last-child) {
+    margin-bottom: 15px;
+  }
+
+  &__item {
+    width: 100%;
+    margin-bottom: 20px;
+    @include mq(tablet) {
+      margin: 15px;
+      flex-basis: calc(100% / 2 - 30px);
+    }
+    @include mq(desktop) {
+      flex-basis: calc(100% / 4 - 30px);
+    }
+  }
+
+  &__img {
+    width: 100%;
+    transition: var(--transition-duration);
+    border-radius: 5px;
+  }
+}
