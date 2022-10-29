@@ -33,7 +33,7 @@ body {
     height: 30px;
     position: relative;
     border: 4px solid #Fff;
-    animation: loader 2s infinite ease;
+    animation: loader 2050ms infinite ease;
 }
 
 .loader-inner {
@@ -41,15 +41,15 @@ body {
     display: inline-block;
     width: 100%;
     background-color: #fff;
-    animation: loader-inner 2s infinite ease-in;
+    animation: loader-inner 2050ms infinite ease-in;
 }
 
     @keyframes loader {
-    0% { transform: rotate(0deg);}
+    0% { opacity: 0.15; transform: rotate(0deg);}
     25% { transform: rotate(180deg);}
-    50% { transform: rotate(180deg);}
+    50% { opacity: 0.6; transform: rotate(180deg);}
     75% { transform: rotate(360deg);}
-    100% { transform: rotate(360deg);}
+    100% { opacity: 0.15; background-color: rgba($color: #242f3f, $alpha: 1); opacity: 1; transform: rotate(360deg);}
 }
 
     @keyframes loader-inner {
