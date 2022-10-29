@@ -10,6 +10,7 @@ footer {
 
   width: 100%;
 }
+
 .foter__list {
   display: flex;
   flex-direction: column;
@@ -23,16 +24,19 @@ footer {
 .footer__wrap {
   display: flex;
   margin-top: 10px;
+
   @include mq(tablet) {
     margin-top: 0;
   }
 }
+
 .foter__list-item,
 .footer__btn {
   font-weight: 400;
   font-size: 14px;
   line-height: 1.14;
   color: #545454;
+
   @include mq(tablet) {
     font-size: 16px;
     line-height: 1.19;
@@ -67,6 +71,7 @@ footer {
   width: 200px;
   height: 200px;
 }
+
 // ====================================
 
 .for__footer-wrapper {
@@ -74,6 +79,49 @@ footer {
   flex-direction: column;
   height: 100vh;
 }
+
 main {
   flex: 1;
+}
+
+#tui-pagination-container {
+  height: 44px;
+  width: 480px;
+  background-color: #fff;
+  border-radius: 20px;
+  margin: 0 auto;
+  box-shadow: 3px 2px 3px 1px rgb(163 162 162 / 75%);
+}
+
+#tui-pagination-container strong {
+  background: #FF6B08;
+}
+
+#tui-pagination-container .tui-page-btn {
+  width: 40px;
+  height: 40px;
+  padding: 10px 11px;
+  border: none;
+  border-radius: 6px;
+  font-family: 'Roboto';
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 1.33;
+  transition-property: border;
+  transition-duration: 250ms;
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+#tui-pagination-container .tui-first:hover,
+#tui-pagination-container .tui-prev:hover,
+#tui-pagination-container .tui-next:hover,
+#tui-pagination-container .tui-last:hover {
+  background-color: rgb(241, 241, 241);
+}
+
+.tui-ico-first,
+.tui-ico-prev,
+.tui-ico-next,
+.tui-ico-last {
+  filter: brightness(.5)contrast(1.2);
 }
