@@ -1,4 +1,3 @@
-
 .toolbar {
     display: flex;
     justify-content: flex-end;
@@ -17,12 +16,13 @@
     z-index: 0;
     position: absolute;
     margin-right: 5px;
-        margin-top: -40px;
-    
-        @media screen and (max-width: 479px) {
-            margin-right: -55px;
-            }
+    margin-top: -40px;
+
+    @media screen and (max-width: 479px) {
+        margin-right: -55px;
+    }
 }
+
 .theme-switch-icon {
     fill: #ff6b01;
     color: currentColor;
@@ -38,7 +38,7 @@
     flex-shrink: 0;
     position: relative;
     width: 60px;
-        height: 20px;
+    height: 20px;
     border-radius: 50em;
     padding: 3px 0;
 
@@ -74,7 +74,7 @@
     position: relative;
     background-color: #ffffff;
     width: 20px;
-        height: 20px;
+    height: 20px;
     border-radius: 50%;
     z-index: 2;
     pointer-events: none;
@@ -97,10 +97,29 @@
     box-shadow: 0 0 0 3px #ff6b01;
 }
 
-.dark{
+.dark {
     background-color: #333333;
     color: #ffffff;
-    & footer{
+
+    & footer {
         background-color: #757575;
+    }
+
+    & #tui-pagination-container {
+        background-color: #757575;
+
+        & .tui-first:hover,
+        & .tui-prev:hover,
+        & .tui-next:hover,
+        & .tui-last:hover {
+            background-color: rgb(180, 180, 180);
+        }
+    }
+
+    & .tui-ico-first,
+    & .tui-ico-prev,
+    & .tui-ico-next,
+    & .tui-ico-last {
+        filter: brightness(2)contrast(1.2);
     }
 }

@@ -18,6 +18,7 @@
   transition: var(--transition-duration);
   transition-timing-function: var(--timing-function);
 }
+
 .button:hover {
   background-color: #ab8d7852;
 }
@@ -26,10 +27,11 @@
   display: flex;
   text-align: center;
   justify-content: center;
+
   @media screen and (max-width: 767px) {
     margin-top: 30px;
   }
-  
+
 }
 
 .library__button {
@@ -45,6 +47,7 @@
   @media screen and (min-width: $tablet) {
     width: 152px;
   }
+
   @media screen and (min-width: $desktop) {
     width: 147px;
     height: 42px;
@@ -57,6 +60,7 @@
   @media screen and (min-width: $tablet) {
     margin-right: 32px;
   }
+
   @media screen and (min-width: $desktop) {
     margin-right: 16px;
   }
@@ -65,4 +69,49 @@
 .library__button.is-active {
   background-color: var(--accent-color);
   border-color: var(--accent-color);
+}
+
+.back_to_top {
+  width: 60px;
+  height: 60px;
+  font-weight: 700;
+  background-color: rgba(255, 107, 9, 0.6);
+  color: #fff;
+  border-radius: 50px;
+  position: fixed;
+  bottom: 30px;
+  right: 30px;
+  cursor: pointer;
+  display: none;
+  font-size: 18px;
+  line-height: 2;
+  text-align: center;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.25);
+  transition-property: background-color;
+  transition-duration: 250ms;
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.back_to_top:hover {
+  background-color: rgba(255, 107, 9);
+  animation: img-size 1000ms infinite cubic-bezier(0.4, 0, 0.2, 1);
+  transition-property: background-color;
+  transition-duration: 250ms;
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+
+  @keyframes img-size {
+    50% {
+      bottom: 40px;
+    }
+  }
+}
+
+.back_to_top-show {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+main {
+  margin-bottom: 1500px;
 }

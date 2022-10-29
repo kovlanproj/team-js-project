@@ -88,21 +88,7 @@
     </section>
 
     <!-- ==================== pagination ============================ -->
-    <div class="pagination tui-pagination" id="pagination">
-      <!--<button class="pagination__button--arrow" type="button" aria-label="previous-page">
-        <svg width="16" height="16">
-          <use href="./images/symbol-defs.svg#icon-arrow-left2"></use>
-        </svg>
-      </button>
-      <div class="pagination__container--first-button"></div>
-      <div class="pagination__container--buttons"></div>
-      <div class="pagination__container--last-button"></div>
-      <button class="pagination__button--arrow" type="button" aria-label="next-page">
-        <svg width="16" height="16">
-          <use href="./images/symbol-defs.svg#icon-arrow-right2"></use>
-        </svg>
-      </button>-->
-    </div>
+    <div class="pagination tui-pagination" id="tui-pagination-container"></div>
   </main>
 
   <!-- ================= footer ====================== -->
@@ -123,9 +109,13 @@
       </ul>
     </div>
   </footer>
+  <button class="back_to_top" title="Scroll top">
+    UP
+  </button>
   <include src="./partials/modals.html"></include>
   <script src="./js/main.js" type="module"></script>
   <script src="./js/switcher.js"></script>
+  <script src="./js/scroll-to-top.js"></script>
 </body>
 
 </html>

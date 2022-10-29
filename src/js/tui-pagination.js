@@ -11,6 +11,7 @@ const options = {
 };
 
 const tuiContainer = document.querySelector('.tui-pagination');
+
 const pagination = new Pagination(tuiContainer, options);
 
 export default pagination;

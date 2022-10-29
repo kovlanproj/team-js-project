@@ -10,6 +10,7 @@ footer {
 
   width: 100%;
 }
+
 .foter__list {
   display: flex;
   flex-direction: column;
@@ -23,16 +24,19 @@ footer {
 .footer__wrap {
   display: flex;
   margin-top: 10px;
+
   @include mq(tablet) {
     margin-top: 0;
   }
 }
+
 .foter__list-item,
 .footer__btn {
   font-weight: 400;
   font-size: 14px;
   line-height: 1.14;
   color: #545454;
+
   @include mq(tablet) {
     font-size: 16px;
     line-height: 1.19;
@@ -67,6 +71,7 @@ footer {
   width: 200px;
   height: 200px;
 }
+
 // ====================================
 
 .for__footer-wrapper {
@@ -74,6 +79,7 @@ footer {
   flex-direction: column;
   height: 100vh;
 }
+
 main {
   flex: 1;
 }
