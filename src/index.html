@@ -8,6 +8,8 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500&display=swap" rel="stylesheet" />
     <link rel="stylesheet" href="./sass/index.scss" />
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons"
+      rel="stylesheet">
     <script type="module" src="./index.js"></script>
   </head>
   <body>
@@ -116,11 +118,12 @@
           </li>
           <li class="footer__list-item">
             by
-            <button type="button" class="footer__btn">GoIT Students</button>
+            <button type="button" class="footer__btn" data-modal-open>GoIT Students</button>
           </li>
         </ul>
       </div>
     </footer>
-   <include src="./partials/modals.html"></include>
+  <include src="./partials/modals.html"></include>
+  <script src="./js/footer-modal.js" type="module"></script>
   </body>
 </html>
