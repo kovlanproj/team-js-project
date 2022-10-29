@@ -1,5 +1,5 @@
 import { IMAGE_URL } from './movie-service';
-import genres from './listGenres';
+import genree from '../genres.json';
 
 export function createFilmCardMarkup(filmData) {
   const {
@@ -11,11 +11,11 @@ export function createFilmCardMarkup(filmData) {
     vote_average,
     genres,
   } = filmData;
-  const genresArr = genres?.map(({ id }) => id) || [];
+  const genresArr = genree.genres?.map(({ id }) => id) || [];
   const filmGenresId = genre_ids?.slice(0, 3) || genresArr;
   const filmGenres = [];
   for (const filmId of filmGenresId) {
-    for (const genre of genres) {
+    for (const genre of genree.genres) {
       if (filmId === genre.id) {
         filmGenres.push(genre.name);
       }

@@ -1,129 +1,138 @@
 <!DOCTYPE html>
 <html lang="ru">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Filmoteka</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500&display=swap" rel="stylesheet" />
-    <link rel="stylesheet" href="./sass/index.scss" />
-    <link href="https://fonts.googleapis.com/icon?family=Material+Icons"
-      rel="stylesheet">
-    <script type="module" src="./index.js"></script>
-  </head>
-  <body>
-    <header class="header" id="home">
-      <div class="header__container container">
-        <div class="header__wrapper">
-          <a class="logo" href="./index.html" aria-label="Filmoteka logo">
-            <svg class="logo__icon" width="24px" height="24px">
-              <use href="./images/symbol-defs.svg#icon-film"></use>
-            </svg>
-            <span class="logo__text">Filmoteka</span>
-          </a>
-          <nav class="nav">
-            <ul class="nav__list">
-              <li class="nav__item active">
-                <a class="nav__link" href="index.html">HOME</a>
-              </li>
-              <li class="nav__item nav__item-auth visually-hidden">
-                <a class="nav__link" href="./library.html">
-                  MY LIBRARY
-                </a>
-              </li>
-            </ul>
-            <div class="nav__btn-wrapper">
-              <button class="nav__item-button button" id="modal-btn-record">
-                sign up
-              </button>
-    
-              <button class="nav__item-button button" id="modal-btn-auth">
-                sign in
-              </button>
-            </div>
-          </nav>
-        </div>
-        <div class="input">
-          <form class="input__wraper">
-            <input class="header__input" name="searchQuery" type="text" placeholder="Movie search" autocomplete="off" />
-            <button class="input__search-btn" type="submit">
-              <svg class="input__search-icon" width="12px" height="12px">
-                <use href="./images/symbol-defs.svg#icon-search-2"></use>
-              </svg>
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Filmoteka</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="./sass/index.scss" />
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  <script type="module" src="./index.js"></script>
+</head>
+
+<body>
+  <header class="header" id="home">
+    <div class="header__container container">
+      <div class="header__wrapper">
+        <a class="logo" href="./index.html" aria-label="Filmoteka logo">
+          <svg class="logo__icon" width="24px" height="24px">
+            <use href="./images/symbol-defs.svg#icon-film"></use>
+          </svg>
+          <span class="logo__text">Filmoteka</span>
+        </a>
+        <nav class="nav">
+          <ul class="nav__list">
+            <li class="nav__item active">
+              <a class="nav__link" href="index.html">HOME</a>
+            </li>
+            <li class="nav__item nav__item-auth visually-hidden">
+              <a class="nav__link" href="./library.html">
+                MY LIBRARY
+              </a>
+            </li>
+          </ul>
+          <div class="nav__btn-wrapper">
+            <button class="nav__item-button button" id="modal-btn-record">
+              sign up
             </button>
-          </form>
-        </div>
-
-        <!-- ====================Theme switcher========================= -->
-        <div class="container toolbar">
-          <div class="theme-switch">
-            <svg class="theme-switch-icon" width="20px" height="20px" role="img" aria-label="Іконка сонця">
-              <use href="./images/symbol-defs.svg#sun"></use>
-            </svg>
-    
-            <div class="theme-switch-control">
-              <input class="theme-switch-toggle" type="checkbox" name="theme" id="theme-switch-toggle"
-                aria-label="Перемикач теми" />
-              <label aria-hidden="true" class="theme-switch-track" for="theme-switch-toggle"></label>
-              <div aria-hidden="true" class="theme-switch-marker"></div>
-            </div>
-    
-            <svg class="theme-switch-icon" width="20px" height="20px" aria-label="Іконка місяця">
-              <use href="./images/symbol-defs.svg#moon"></use>
-            </svg>
+            <button class="nav__item-button button" id="modal-btn-auth">
+              sign in
+            </button>
           </div>
-        </div>
-        <p class="input__error" id="js-input-error"></p>
+        </nav>
       </div>
-    </header>
-    <main>
-
-      <!-- ====================films-cards============================= -->
-      <section class="films">
-        <div class="films__container container">
-          <h1 class="visually-hidden">Filmoteka</h1>
-          <ul class="films__list js-films-list"></ul>
-        </div>
-      </section>
-
-      <!-- ==================== pagination ============================ -->
-      <div class="pagination">
-        <button class="pagination__button--arrow" type="button" aria-label="previous-page">
-          <svg width="16" height="16">
-            <use href="./images/symbol-defs.svg#icon-arrow-left2"></use>
-          </svg>
-        </button>
-        <div class="pagination__container--first-button"></div>
-        <div class="pagination__container--buttons"></div>
-        <div class="pagination__container--last-button"></div>
-        <button class="pagination__button--arrow" type="button" aria-label="next-page">
-          <svg width="16" height="16">
-            <use href="./images/symbol-defs.svg#icon-arrow-right2"></use>
-          </svg>
-        </button>
-      </div>
-    </main>
-
-    <!-- ================= footer ====================== -->
-    <footer>
-      <div class="footer__list">
-        <p class="footer__list-item">© 2022 | All Rights Reserved |</p>
-        <ul class="footer__wrap">
-          <li class="footer__list-item">Developed with</li>
-          <li>
-            <svg class="footer__list-icon">
-              <use href="./images/symbol-defs.svg#icon-heart"></use>
+      <div class="input">
+        <form class="input__wraper">
+          <input class="header__input" name="searchQuery" type="text" placeholder="Movie search" autocomplete="off" />
+          <button class="input__search-btn" type="submit">
+            <svg class="input__search-icon" width="12px" height="12px">
+              <use href="./images/symbol-defs.svg#icon-search-2"></use>
             </svg>
-          </li>
-          <li class="footer__list-item">
-            by
-            <button type="button" class="footer__btn" data-modal-open>GoIT Students</button>
-          </li>
-        </ul>
+
+          </button>
+
+          <button class="nav__item-button button" id="modal-btn-auth">
+            sign in
+          </button>
       </div>
-    </footer>
+      </nav>
+    </div>
+    <div class="input">
+      <form class="input__wraper">
+        <input class="header__input" name="searchQuery" type="text" placeholder="Movie search" autocomplete="off" />
+        <button class="input__search-btn" type="submit">
+          <svg class="input__search-icon" width="12px" height="12px">
+            <use href="./images/symbol-defs.svg#icon-search-2"></use>
+          </svg>
+
+        </button>
+      </form>
+    </div>
+
+    <!-- ====================Theme switcher========================= -->
+    <div class="container toolbar">
+      <div class="theme-switch">
+        <svg class="theme-switch-icon" width="20px" height="20px" role="img" aria-label="Іконка сонця">
+          <use href="./images/symbol-defs.svg#sun"></use>
+        </svg>
+
+        <div class="theme-switch-control">
+          <input class="theme-switch-toggle" type="checkbox" name="theme" id="theme-switch-toggle"
+            aria-label="Перемикач теми" onclick="changeStatus()" />
+          <label aria-hidden="true" class="theme-switch-track" for="theme-switch-toggle"></label>
+          <div aria-hidden="true" class="theme-switch-marker"></div>
+        </div>
+
+        <svg class="theme-switch-icon" width="20px" height="20px" aria-label="Іконка місяця">
+          <use href="./images/symbol-defs.svg#moon"></use>
+        </svg>
+      </div>
+    </div>
+    <p class="input__error" id="js-input-error"></p>
+    </div>
+  </header>
+  <main>
+
+    <!-- ====================films-cards============================= -->
+    <section class="films">
+      <div class="films__container container">
+        <h1 class="visually-hidden">Filmoteka</h1>
+        <ul class="films__list js-films-list"></ul>
+      </div>
+    </section>
+    <!-- ==================== pagination ============================ -->
+    <section class="bg-wrapper"></section>
+    <div class="pagination tui-pagination" id="tui-pagination-container"></div>
+  </main>
+
+  <!-- ================= footer ====================== -->
+  <footer>
+    <div class="footer__list">
+      <p class="footer__list-item">© 2022 | All Rights Reserved |</p>
+      <ul class="footer__wrap">
+        <li class="footer__list-item">Developed with</li>
+        <li>
+          <svg class="footer__list-icon">
+            <use href="./images/symbol-defs.svg#icon-heart"></use>
+          </svg>
+        </li>
+        <li class="footer__list-item">
+          by
+          <button type="button" class="footer__btn">GoIT Students</button>
+        </li>
+      </ul>
+    </div>
+  </footer>
+  <button class="back_to_top" title="Scroll top">
+    UP
+  </button>
   <include src="./partials/modals.html"></include>
-  <script src="./js/footer-modal.js" type="module"></script>
-  </body>
+  <script type="module" src="./js/main.js"></script>
+  <script src="./js/switcher.js"></script>
+  <script type="module" src="./js/scroll-to-top.js"></script>
+</body>
+
 </html>
