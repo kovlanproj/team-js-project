@@ -38,4 +38,10 @@ export default class MovieApiService {
     );
     return response.data;
   }
+  nextPage() {
+    this.page += 1;
+  };
+  previousPage() {
+    this.page -= 1;
+  }
 }
