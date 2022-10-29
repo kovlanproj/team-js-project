@@ -1,3 +1,6 @@
+import { IMAGE_URL } from './movie-service';
+import genres from './listGenres';
+
 export function createFilmCardMarkup(filmData) {
   const {
     poster_path,
@@ -23,7 +26,7 @@ export function createFilmCardMarkup(filmData) {
 
   const filmDate = release_date?.slice(0, 4) || '...';
   const filmPoster = poster_path
-    ? URL_IMG + poster_path
+    ? IMAGE_URL + poster_path
     : 'https://www.reelviews.net/resources/img/default_poster.jpg';
 
   return `<li data-id="${id}" class="card film-card">
