@@ -2,22 +2,31 @@ import Pagination from 'tui-pagination';
 import 'tui-pagination/dist/tui-pagination.min.css';
 import pagination from './tui-pagination';
 import genre from '../genres.json';
-let page = 0;
+import MovieApiService from './movie-service';
+import {
+    saveInputLocalStorage,
+    savePaginationLocalStorage,
+    parseInputLocalStorege,
+    parsePaginationLocalStorage
+} from './local-storage'
+
 let filmName = '';
 
 const refs = {
     paginationList: document.querySelector('.tui-pagination'),
     form: document.querySelector('.input__wraper'),
     input: document.querySelector('.header__input'),
-    cardList: document.querySelector('.films__list')
+    cardList: document.querySelector('.films__list'),
+    selectedPage: document.querySelector('.tui-is-selected')
 };
+const api = new MovieApiService();
 
 refs.form.addEventListener('submit', fetchFilms);
 refs.paginationList.addEventListener('click', onClickBtnPagination);
 refs.input.addEventListener('input', returnPopularFilms);
 
 
-fetchPopularFilms(parsePaginationLocalStorage() || page);
+fetchPopularFilms(parsePaginationLocalStorage());
 
 function returnPopularFilms(evt) {
     saveInputLocalStorage(evt.target.value);
@@ -31,15 +40,15 @@ function returnPopularFilms(evt) {
 function fetchFilms(evt) {
     evt.preventDefault();
     pagination.reset();
-    page = 1;
+    api.resetPage()
     filmName = e.currentTarget.elements.search.value;
-    savePaginationLocalStorage(page);
+    savePaginationLocalStorage(api.page);
     // return fetchNecessaryFilm(filmName, page);
 }
 
 function onClickBtnPagination() {
-    page = pagination.getCurrentPage();
-    savePaginationLocalStorage(page);
+    api.page = pagination.getCurrentPage();
+    savePaginationLocalStorage(api.page);
     window.scrollTo({
         top: 0,
         left: 0,
@@ -52,18 +61,9 @@ function onClickBtnPagination() {
     // return fetchNecessaryFilm(filmName, parsePaginationLocalStorage());
 }
 
-
-
 function fetchPopularFilms(page) {
-    fetch(
-        `https://api.themoviedb.org/3/trending/movie/day?api_key=1e47046f2fa6627c23534650c78833b4&page=${page}`
-    )
-        .then(response => {
-            if (!response.ok) {
-                throw new Error(response.status);
-            }
-            return response.json();
-        })
+    api.setPage(parsePaginationLocalStorage())
+    api.getMoviesList()
         .then(({ results, total_pages }) => {
             pagination.reset(total_pages * 10);
             createFilmCardMarkup(results);
@@ -85,19 +85,23 @@ function createFilmCardMarkup(films) {
             } = film;
             const year = new Date(release_date).getFullYear();
             return `<li data-id="${id}" class="card film-card">
-                <div class="film-card__img-wrap">
-                    <img
-                        class="film-card__img"
-                        src=${fetchFilmPhoto(poster_path)}
-                        alt="Poster to movie"
-                    />
-                </div>
-            <h2 class="film-card__title">${original_title}</h2>
-            <div class="film-card__wrap">
-                <span class="film-card__info">${getGenres(genre_ids).join(', ')} | ${year}</span>
-                <span data-film-rating class="film-card__rating">${vote_average.toFixed(2)}</span>
-            </div>
-        </li>`;
+                        <div class="film-card__img-wrap">
+                            <img
+                                class="film-card__img"
+                                src=${fetchFilmPhoto(poster_path)}
+                                alt="Poster to movie"
+                                width="395"
+                                height="574"
+                            />
+                        </div>
+                        <div class="film-card__wrap">
+                            <h2 class="film-card__title">${original_title}</h2>
+                            <div class="film-card__wrapper">
+                                <span class="film-card__info">${getGenres(genre_ids).join(', ')} | ${year}</span>
+                                <span data-film-rating class="film-card__rating">${vote_average.toFixed(2)}</span>
+                            </div>
+                        </div>
+                    </li>`;
         })
         .join('');
     refs.cardList.innerHTML = newMarkup;
@@ -127,18 +131,3 @@ function getGenres(ids) {
     return newArray;
 }
 
-function saveInputLocalStorage(query) {
-    localStorage.setItem('loc', JSON.stringify(query));
-}
-
-function parseInputLocalStorege() {
-    return JSON.parse(localStorage.getItem('loc'));
-}
-
-function savePaginationLocalStorage(page) {
-    localStorage.setItem('page', JSON.stringify(page));
-}
-
-function parsePaginationLocalStorage() {
-    return JSON.parse(localStorage.getItem('page'));
-}
