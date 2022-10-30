@@ -15,6 +15,7 @@ export default class MovieApiService {
     const response = await axios.get(
       `${BASE_URL}/trending/movie/day?api_key=${API_KEY}&page=${this.page}`
     );
+
     return response.data;
   }
 
@@ -40,8 +41,14 @@ export default class MovieApiService {
   }
   nextPage() {
     this.page += 1;
-  };
+  }
   previousPage() {
     this.page -= 1;
+  }
+  resetPage() {
+    this.page = 1;
+  }
+  setPage(newPage) {
+    this.page = newPage;
   }
 }

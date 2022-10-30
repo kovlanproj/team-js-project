@@ -98,13 +98,22 @@
 }
 
 #tui-pagination-container {
-  height: 44px;
-  width: 480px;
+  height: 40px;
+  width: 280px;
   background-color: #fff;
   border-radius: 20px;
   margin: 0 auto;
   box-shadow: 3px 2px 3px 1px rgb(163 162 162 / 75%);
-  margin-bottom: 20px;
+  margin-bottom: 60px;
+
+  @include mq(tablet) {
+    width: 374px;
+  }
+
+  @include mq(desktop) {
+    height: 44px;
+    width: 480px;
+  }
 }
 
 #tui-pagination-container strong {
@@ -131,6 +140,19 @@
 #tui-pagination-container .tui-next:hover,
 #tui-pagination-container .tui-last:hover {
   background-color: rgb(241, 241, 241);
+}
+
+#tui-pagination-container .tui-first,
+#tui-pagination-container .tui-last,
+#tui-pagination-container .tui-icon-prev,
+#tui-pagination-container .tui-last-child {
+  @include mq(mobile) {
+    display: none;
+  }
+
+  @include mq(tablet) {
+    display: inline;
+  }
 }
 
 .tui-ico-first,
