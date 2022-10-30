@@ -39,6 +39,9 @@ export default class MovieApiService {
     );
     return response.data;
   }
+  getStartPage() {
+    return this.page = 1;
+  }
   nextPage() {
     this.page += 1;
   }
