@@ -11,13 +11,13 @@ const refs = {
     function onOpenModal() {
     refs.backdrops.classList.remove('is-hidden');
     window.addEventListener('keydown', onPressESC);
-    document.body.style.overflow = 'hidden';
+    // document.body.style.overflow = 'hidden';
 }
 
 function onCloseModal() {
     refs.backdrops.classList.add('is-hidden');
     window.removeEventListener('keydown', onPressESC);
-    document.body.style.overflow = 'visible';
+    // document.body.style.overflow = 'visible';
 }
 
 
