@@ -26,7 +26,7 @@ refs.paginationList.addEventListener('click', onClickBtnPagination);
 refs.input.addEventListener('input', returnPopularFilms);
 
 
-fetchPopularFilms(parsePaginationLocalStorage());
+fetchPopularFilms(parsePaginationLocalStorage() || api.getStartPage());
 
 function returnPopularFilms(evt) {
     saveInputLocalStorage(evt.target.value);
@@ -62,7 +62,7 @@ function onClickBtnPagination() {
 }
 
 function fetchPopularFilms(page) {
-    api.setPage(parsePaginationLocalStorage())
+    api.setPage(parsePaginationLocalStorage() || api.getStartPage())
     api.getMoviesList()
         .then(({ results, total_pages }) => {
             pagination.reset(total_pages * 10);
