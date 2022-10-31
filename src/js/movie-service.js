@@ -1,7 +1,7 @@
 import axios from 'axios';
 
-const API_KEY = '1e47046f2fa6627c23534650c78833b4';
-const BASE_URL = 'https://api.themoviedb.org/3';
+export const API_KEY = '1e47046f2fa6627c23534650c78833b4';
+export const BASE_URL = 'https://api.themoviedb.org/3';
 export const IMAGE_URL = 'https://image.tmdb.org/t/p/w200';
 const lang = 'en-US';
 
@@ -40,7 +40,7 @@ export default class MovieApiService {
     return response.data;
   }
   getStartPage() {
-    return this.page = 1;
+    return (this.page = 1);
   }
   nextPage() {
     this.page += 1;
