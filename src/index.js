@@ -11,6 +11,29 @@ import {
   parsePaginationLocalStorage,
 } from './js/local-storage';
 
+import { auth } from './js/firebase/auth';
+import { onAuthStateChanged } from 'firebase/auth';
+import {
+  onShowAuthModal,
+  formBackdropRef,
+  onClickBackdrop,
+} from './js/auth/login-form';
+import {
+  addAuthBtns,
+  removeAuthBtns,
+  addNav,
+  removeNav,
+  renderNav,
+  addLogOutButton,
+} from './js/auth/auth-nav';
+
+renderNav('index');
+const loginBtnRef = document.querySelector('#modal-btn-auth');
+if (loginBtnRef) {
+  loginBtnRef.addEventListener('click', onShowAuthModal);
+}
+formBackdropRef.addEventListener('click', onClickBackdrop);
+
 let filmName = '';
 
 const refs = {
@@ -136,6 +159,24 @@ function getGenres(ids) {
   }
   return newArray;
 }
+
+onAuthStateChanged(auth, user => {
+  if (user) {
+    const uid = user.uid;
+    localStorage.setItem('auth', '1');
+    removeAuthBtns();
+    addNav('index');
+    addLogOutButton();
+  } else {
+    console.log('User is signed out');
+    localStorage.setItem('auth', '0');
+    addAuthBtns();
+    removeNav();
+    document
+      .querySelector('#modal-btn-auth')
+      .addEventListener('click', onShowAuthModal);
+  }
+});
 
 // const api = new MovieApiService();
 
