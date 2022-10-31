@@ -1,4 +1,5 @@
 import MovieApiService from './js/movie-service';
+import Notiflix from 'notiflix';
 import Pagination from 'tui-pagination';
 import 'tui-pagination/dist/tui-pagination.min.css';
 import pagination from './js/tui-pagination';
