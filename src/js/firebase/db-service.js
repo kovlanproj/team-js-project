@@ -4,9 +4,10 @@ import app from './config';
 
 const db = getDatabase(app);
 
-export function addUser(userId, username) {
+export function addUser(userId, username, email) {
   set(ref(db, 'users/' + userId), {
     username,
+    email,
   });
 }
 

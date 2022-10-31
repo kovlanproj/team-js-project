@@ -120,7 +120,7 @@ function onBtnSignUpClick() {
       setTimeout(() => {
         onCloseModal();
       }, 3000);
-      addUser(user.uid, name);
+      addUser(user.uid, name, email);
       refs.signupName.value = '';
       refs.signupEmail.value = '';
       refs.signupPassword.value = '';
