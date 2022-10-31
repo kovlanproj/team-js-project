@@ -46,11 +46,23 @@ const refs = {
 
 const api = new MovieApiService();
 
-refs.form.addEventListener('submit', fetchFilms);
+refs.form.addEventListener('submit', onSubmitClick);
 refs.paginationList.addEventListener('click', onClickBtnPagination);
 refs.input.addEventListener('input', returnPopularFilms);
+refs.input.value = parseInputLocalStorege();
 
 fetchPopularFilms(parsePaginationLocalStorage() || api.getStartPage());
+
+popularNessesaryFilm(refs.input.value);
+
+function popularNessesaryFilm(inputVal) {
+  if (inputVal === '') {
+    fetchPopularFilms(parsePaginationLocalStorage() || api.getStartPage());
+    return;
+  }
+  murkupSearchMovie(parseInputLocalStorege(), api.getStartPage());
+  pagination.reset();
+}
 
 function returnPopularFilms(evt) {
   saveInputLocalStorage(evt.target.value);
@@ -61,14 +73,36 @@ function returnPopularFilms(evt) {
   }
 }
 
-function fetchFilms(evt) {
-  evt.preventDefault();
-  pagination.reset();
+function onSubmitClick(event) {
+  event.preventDefault();
   api.resetPage();
-  filmName = e.currentTarget.elements.search.value;
-  savePaginationLocalStorage(api.page);
-  // return fetchNecessaryFilm(filmName, page);
+  pagination.reset();
+  savePaginationLocalStorage(api.getStartPage());
+
+  const searchQuery = event.currentTarget.elements.searchQuery.value
+    .trim()
+    .toLowerCase();
+
+  if (!searchQuery) {
+    Notiflix.Notify.failure('Enter the name of the movie!', {
+      position: 'center-top',
+      fontFamily: 'inherit',
+      borderRadius: '25px',
+      clickToClose: true,
+    });
+    return;
+  }
+  return murkupSearchMovie(searchQuery);
 }
+
+// function fetchFilms(evt) {
+//     evt.preventDefault();
+//     pagination.reset();
+//     api.resetPage()
+//     filmName = evt.currentTarget.elements.search.value;
+//     savePaginationLocalStorage(api.page);
+//     // return fetchNecessaryFilm(filmName, page);
+// }
 
 function onClickBtnPagination() {
   api.page = pagination.getCurrentPage();
@@ -79,10 +113,13 @@ function onClickBtnPagination() {
     behavior: 'smooth',
   });
 
-  if (filmName === '') {
+  if (parseInputLocalStorege() === '') {
     return fetchPopularFilms(parsePaginationLocalStorage());
   }
-  // return fetchNecessaryFilm(filmName, parsePaginationLocalStorage());
+  return murkupSearchMovie(
+    parseInputLocalStorege(),
+    parsePaginationLocalStorage()
+  );
 }
 
 function fetchPopularFilms(page) {
@@ -91,6 +128,30 @@ function fetchPopularFilms(page) {
     .getMoviesList()
     .then(({ results, total_pages }) => {
       pagination.reset(total_pages * 10);
+      createFilmCardMarkup(results);
+      pagination.movePageTo(page);
+    })
+    .catch(console.log);
+}
+
+function murkupSearchMovie(filmName, page) {
+  api
+    .getMovie(filmName)
+    .then(({ results, total_pages }) => {
+      pagination.reset(total_pages * 10);
+      if (results.length === 0) {
+        Notiflix.Notify.failure(
+          'Search result not successful. Enter the correct movie name and',
+          {
+            position: 'center-top',
+            fontFamily: 'inherit',
+            borderRadius: '25px',
+            clickToClose: true,
+          }
+        );
+        // searchQuery = '';
+        return;
+      }
       createFilmCardMarkup(results);
       pagination.movePageTo(page);
     })
@@ -159,6 +220,9 @@ function getGenres(ids) {
   }
   return newArray;
 }
+
+
+
 
 onAuthStateChanged(auth, user => {
   if (user) {
