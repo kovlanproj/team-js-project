@@ -26,6 +26,7 @@ import {
   renderNav,
   addLogOutButton,
 } from './js/auth/auth-nav';
+import { showInfoModal } from './js/model-info-film'
 
 renderNav('index');
 const loginBtnRef = document.querySelector('#modal-btn-auth');
@@ -42,6 +43,7 @@ const refs = {
   input: document.querySelector('.header__input'),
   cardList: document.querySelector('.films__list'),
   selectedPage: document.querySelector('.tui-is-selected'),
+  infoModal: document.querySelector('.modal-holder'),
 };
 
 const api = new MovieApiService();
@@ -134,6 +136,14 @@ function createFilmCardMarkup(films) {
     })
     .join('');
   refs.cardList.innerHTML = newMarkup;
+
+  refs.cardList.addEventListener('click', event => {
+    const card = event.target.closest('li');
+    if(card){
+      const cardId = card.getAttribute('data-id');
+      showInfoModal(refs.infoModal, api, cardId);
+    }
+  });
 }
 
 function fetchFilmPhoto(posterPath) {
