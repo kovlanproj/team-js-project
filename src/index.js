@@ -1,4 +1,5 @@
 import MovieApiService from './js/movie-service';
+import Notiflix from 'notiflix';
 import Pagination from 'tui-pagination';
 import 'tui-pagination/dist/tui-pagination.min.css';
 import pagination from './js/tui-pagination';
@@ -48,28 +49,54 @@ const refs = {
 
 const api = new MovieApiService();
 
-refs.form.addEventListener('submit', fetchFilms);
+refs.form.addEventListener('submit', onSubmitClick);
 refs.paginationList.addEventListener('click', onClickBtnPagination);
 refs.input.addEventListener('input', returnPopularFilms);
+refs.input.value = parseInputLocalStorege();
 
-fetchPopularFilms(parsePaginationLocalStorage() || api.getStartPage());
+popularNessesaryFilm(refs.input.value);
+
+function popularNessesaryFilm(inputVal) {
+  if (inputVal !== '') {
+    saveInputLocalStorage(refs.input.value)
+    console.log(parsePaginationLocalStorage())
+    murkupSearchMovie(parseInputLocalStorege(), parsePaginationLocalStorage() || api.getStartPage());
+    pagination.reset();
+    return
+  }
+  fetchPopularFilms(parsePaginationLocalStorage() || api.getStartPage());
+  return;
+}
 
 function returnPopularFilms(evt) {
   saveInputLocalStorage(evt.target.value);
   const inputValue = evt.target.value;
-  if (inputValue === '') {
+  if (inputValue === '' || parseInputLocalStorege() === null) {
     savePaginationLocalStorage(1);
     fetchPopularFilms(1);
   }
 }
 
-function fetchFilms(evt) {
-  evt.preventDefault();
-  pagination.reset();
+function onSubmitClick(event) {
+  event.preventDefault();
   api.resetPage();
-  filmName = e.currentTarget.elements.search.value;
-  savePaginationLocalStorage(api.page);
-  // return fetchNecessaryFilm(filmName, page);
+  pagination.reset();
+  savePaginationLocalStorage(api.getStartPage());
+
+  const searchQuery = event.currentTarget.elements.searchQuery.value
+    .trim()
+    .toLowerCase();
+
+  if (!searchQuery) {
+    Notiflix.Notify.failure('Enter the name of the movie!', {
+      position: 'center-top',
+      fontFamily: 'inherit',
+      borderRadius: '25px',
+      clickToClose: true,
+    });
+    return;
+  }
+  return murkupSearchMovie(searchQuery || refs.input.value);
 }
 
 function onClickBtnPagination() {
@@ -81,10 +108,13 @@ function onClickBtnPagination() {
     behavior: 'smooth',
   });
 
-  if (filmName === '') {
+  if (refs.input.value === '') {
     return fetchPopularFilms(parsePaginationLocalStorage());
   }
-  // return fetchNecessaryFilm(filmName, parsePaginationLocalStorage());
+  return murkupSearchMovie(
+    parseInputLocalStorege(),
+    parsePaginationLocalStorage()
+  );
 }
 
 function fetchPopularFilms(page) {
@@ -95,6 +125,31 @@ function fetchPopularFilms(page) {
       pagination.reset(total_pages * 10);
       createFilmCardMarkup(results);
       pagination.movePageTo(page);
+    })
+    .catch(console.log);
+}
+
+function murkupSearchMovie(filmName, page) {
+  api.setPage(parsePaginationLocalStorage() || api.getStartPage());
+  api
+    .getMovie(filmName)
+    .then(({ results, total_pages }) => {
+      pagination.reset(total_pages * 10);
+      if (results.length === 0) {
+        Notiflix.Notify.failure(
+          'Search result not successful. Enter the correct movie name and',
+          {
+            position: 'center-top',
+            fontFamily: 'inherit',
+            borderRadius: '25px',
+            clickToClose: true,
+          }
+        );
+        // searchQuery = '';
+        return;
+      }
+      createFilmCardMarkup(results);
+      pagination.movePageTo(page || api.resetPage());
     })
     .catch(console.log);
 }
@@ -125,11 +180,11 @@ function createFilmCardMarkup(films) {
                             <h2 class="film-card__title">${original_title}</h2>
                             <div class="film-card__wrapper">
                                 <span class="film-card__info">${getGenres(
-                                  genre_ids
-                                ).join(', ')} | ${year}</span>
+        genre_ids
+      ).join(', ')} | ${year}</span>
                                 <span data-film-rating class="film-card__rating">${vote_average.toFixed(
-                                  2
-                                )}</span>
+        2
+      )}</span>
                             </div>
                         </div>
                     </li>`;
@@ -169,6 +224,9 @@ function getGenres(ids) {
   }
   return newArray;
 }
+
+
+
 
 onAuthStateChanged(auth, user => {
   if (user) {
