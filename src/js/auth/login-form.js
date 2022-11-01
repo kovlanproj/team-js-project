@@ -1,11 +1,10 @@
+import Notiflix from 'notiflix';
 import {
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
-  onAuthStateChanged,
-  onAuthStateChanged,
 } from 'firebase/auth';
 import { auth } from '../firebase/auth';
-import { addUser } from '../firebase/db-service';
+import { addUser, readNameFromBase } from '../firebase/db-service';
 import {
   addAuthBtns,
   removeAuthBtns,
@@ -61,6 +60,7 @@ function onBtnClick() {
 function onBtnSignInClick() {
   const email = refs.signinEmail.value;
   const password = refs.signinPassword.value;
+
   signInWithEmailAndPassword(auth, email, password)
     .then(userCredential => {
       const user = userCredential.user;
@@ -68,7 +68,15 @@ function onBtnSignInClick() {
       addNav('index');
       removeAuthBtns();
       addLogOutButton();
-      onLogin(`Welcome, ${user.email}`);
+      readNameFromBase()
+        .then(name => {
+          if (name) {
+            onLogin(`Welcome, ${name}`);
+          } else {
+            onLogin(`Welcome, ${user.email}`);
+          }
+        })
+        .catch(onLogin(`Welcome, ${user.email}`));
       setTimeout(() => {
         onCloseModal();
       }, 3000);
@@ -166,6 +174,25 @@ function onLogin(message, color = '#232b55') {
 // }
 
 export function onLogOut() {
+  readNameFromBase()
+    .then(name => {
+      if (name) {
+        Notiflix.Notify.info(`${name} logged out`, {
+          position: 'center-top',
+          fontFamily: 'inherit',
+          borderRadius: '25px',
+          clickToClose: true,
+        });
+      } else {
+        Notiflix.Notify.info(`You logged out`, {
+          position: 'center-top',
+          fontFamily: 'inherit',
+          borderRadius: '25px',
+          clickToClose: true,
+        });
+      }
+    })
+    .catch();
   auth.signOut();
 }
 

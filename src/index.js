@@ -27,7 +27,7 @@ import {
   renderNav,
   addLogOutButton,
 } from './js/auth/auth-nav';
-import { showInfoModal } from './js/model-info-film'
+import { showInfoModal } from './js/model-info-film';
 
 renderNav('index');
 const loginBtnRef = document.querySelector('#modal-btn-auth');
@@ -58,11 +58,14 @@ popularNessesaryFilm(refs.input.value);
 
 function popularNessesaryFilm(inputVal) {
   if (inputVal !== '') {
-    saveInputLocalStorage(refs.input.value)
-    console.log(parsePaginationLocalStorage())
-    murkupSearchMovie(parseInputLocalStorege(), parsePaginationLocalStorage() || api.getStartPage());
+    saveInputLocalStorage(refs.input.value);
+    console.log(parsePaginationLocalStorage());
+    murkupSearchMovie(
+      parseInputLocalStorege(),
+      parsePaginationLocalStorage() || api.getStartPage()
+    );
     pagination.reset();
-    return
+    return;
   }
   fetchPopularFilms(parsePaginationLocalStorage() || api.getStartPage());
   return;
@@ -145,6 +148,7 @@ function murkupSearchMovie(filmName, page) {
             clickToClose: true,
           }
         );
+
         // searchQuery = '';
         return;
       }
@@ -180,11 +184,11 @@ function createFilmCardMarkup(films) {
                             <h2 class="film-card__title">${original_title}</h2>
                             <div class="film-card__wrapper">
                                 <span class="film-card__info">${getGenres(
-        genre_ids
-      ).join(', ')} | ${year}</span>
+                                  genre_ids
+                                ).join(', ')} | ${year}</span>
                                 <span data-film-rating class="film-card__rating">${vote_average.toFixed(
-        2
-      )}</span>
+                                  2
+                                )}</span>
                             </div>
                         </div>
                     </li>`;
@@ -194,7 +198,7 @@ function createFilmCardMarkup(films) {
 
   refs.cardList.addEventListener('click', event => {
     const card = event.target.closest('li');
-    if(card){
+    if (card) {
       const cardId = card.getAttribute('data-id');
       showInfoModal(refs.infoModal, api, cardId);
     }
@@ -224,9 +228,6 @@ function getGenres(ids) {
   }
   return newArray;
 }
-
-
-
 
 onAuthStateChanged(auth, user => {
   if (user) {
