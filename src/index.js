@@ -13,7 +13,7 @@ import {
 } from './js/local-storage';
 
 import { auth } from './js/firebase/auth';
-import { applyActionCode, onAuthStateChanged } from 'firebase/auth';
+import { onAuthStateChanged } from 'firebase/auth';
 import {
   onShowAuthModal,
   formBackdropRef,
