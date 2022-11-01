@@ -14,6 +14,7 @@ import {
   addLogOutButton,
 } from './auth-nav';
 import { validateData } from '../validation';
+import { updateButtons } from '../model-info-film';
 
 export const formBackdropRef = document.querySelector('.form-backdrop');
 
@@ -80,6 +81,11 @@ function onBtnSignInClick() {
       setTimeout(() => {
         onCloseModal();
       }, 3000);
+
+      if (refs.frame.hasAttribute('movie-id')) {
+        updateButtons(refs.frame.getAttribute('movie-id'));
+      }
+
       refs.signinEmail.value = '';
       refs.signinPassword.value = '';
     })
@@ -129,6 +135,9 @@ function onBtnSignUpClick() {
         onCloseModal();
       }, 3000);
       addUser(user.uid, name, email);
+      if (refs.frame.hasAttribute('movie-id')) {
+        updateButtons(refs.frame.getAttribute('movie-id'));
+      }
       refs.signupName.value = '';
       refs.signupEmail.value = '';
       refs.signupPassword.value = '';
@@ -201,8 +210,15 @@ export function onShowAuthModal() {
   window.addEventListener('keydown', onPressESC);
 }
 
+export function onShowAuthModalFromFilmModal() {
+  onShowAuthModal();
+  const id = document.querySelector('.modal-btn-wrap').getAttribute('data-id');
+  refs.frame.setAttribute('movie-id', id);
+}
+
 function onCloseModal() {
   formBackdropRef.classList.add('is-hidden');
+  refs.frame.removeAttribute('movie-id');
   window.removeEventListener('keydown', onPressESC);
   refs.btnAnimateDiv.classList.remove('btn-animate-grow');
   refs.welcome.classList.remove('welcome-left');

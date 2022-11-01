@@ -45,6 +45,7 @@ const refs = {
   cardList: document.querySelector('.films__list'),
   selectedPage: document.querySelector('.tui-is-selected'),
   infoModal: document.querySelector('.modal-holder'),
+  modalBtnWrap: document.querySelector('.modal-btn-wrap'),
 };
 
 const api = new MovieApiService();
@@ -200,7 +201,7 @@ function createFilmCardMarkup(films) {
     const card = event.target.closest('li');
     if (card) {
       const cardId = card.getAttribute('data-id');
-      showInfoModal(refs.infoModal, api, cardId);
+      showInfoModal(api, cardId);
     }
   });
 }
@@ -245,6 +246,11 @@ onAuthStateChanged(auth, user => {
       .querySelector('#modal-btn-auth')
       .addEventListener('click', onShowAuthModal);
   }
+  // refs.modalBtnWrap.innerHTML =
+  //   '<button type="button" class="modal-btn js-login-modal-btn">To add movie to list, please LogIn</button>';
+  // refs.modalBtnWrap
+  //   .querySelector('.js-login-modal-btn')
+  //   .addEventListener('click', onShowAuthModal);
 });
 
 // const api = new MovieApiService();
