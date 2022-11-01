@@ -1,0 +1,47 @@
+    <div class="backdrop modal-holder is-hidden" onclick="document.querySelector('.modal-holder').classList.add('is-hidden')">
+        <div class="modal-container">
+            <button type="button" class="cross" onclick="document.querySelector('.modal-holder').classList.add('is-hidden')">+</button>
+            
+            <div class="modal-img-container">
+                <img class="modal-img film-info-modal-img" alt="" width="370" height="470">
+            </div>
+            
+            <div class="film-info">
+                <h2 class="film-name film-info-modal-name" style="color: rgb(0, 0, 0);"></h2>
+                
+                <table class="modal-table">
+                    <tr class="modal-table__row">
+                    <td><p class="modal-table__attribute">Оцінка / Оцінок</p></td>
+                    <td>
+                        <p class="modal-table__value">
+                        <span class="modal-table__vote film-modal-table__vote  "></span> /
+                        <span class="modal-table__votes film-modal-table__votes"></span>
+                        </p>
+                    </td>
+                    </tr>
+                    <tr class="modal-table__row">
+                    <td><p class="modal-table__attribute">Популярність</p></td>
+                    <td><p class="modal-table__value film-modal-table__value-popularity"></p></td>
+                    </tr>
+                    <tr class="modal-table__row">
+                    <td><p class="modal-table__attribute">Оригінальна назва</p></td>
+                    <td><p class="modal-table__value film-modal-table__value-original"></p></td>
+                    </tr>
+                    <tr class="modal-table__row">
+                    <td><p class="modal-table__attribute">Жанр</p></td>
+                    <td><p class="modal-table__value film-modal-table__value-genres"></p></td>
+                    </tr>
+                </table>
+    
+                <h3 class="film-about">Опис</h3>
+                <p class="film-description film-film-description">
+                
+                </p>
+    
+                <div class="modal-btn-wrap">
+                    <button type="button" class="modal-btn js-watch film-js-watch" data-id="">ADD TO WATCHED</button>
+                    <button type="button" class="modal-btn js-queue film-js-queue" data-id="">ADD TO QUEUE</button>
+                </div>
+            </div>
+        </div>
+    </div> 
