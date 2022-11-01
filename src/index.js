@@ -13,7 +13,7 @@ import {
 } from './js/local-storage';
 
 import { auth } from './js/firebase/auth';
-import { onAuthStateChanged } from 'firebase/auth';
+import { applyActionCode, onAuthStateChanged } from 'firebase/auth';
 import {
   onShowAuthModal,
   formBackdropRef,
@@ -52,23 +52,24 @@ refs.paginationList.addEventListener('click', onClickBtnPagination);
 refs.input.addEventListener('input', returnPopularFilms);
 refs.input.value = parseInputLocalStorege();
 
-fetchPopularFilms(parsePaginationLocalStorage() || api.getStartPage());
-
 popularNessesaryFilm(refs.input.value);
 
 function popularNessesaryFilm(inputVal) {
-  if (inputVal === '') {
-    fetchPopularFilms(parsePaginationLocalStorage() || api.getStartPage());
-    return;
+  if (inputVal !== '') {
+    saveInputLocalStorage(refs.input.value)
+    console.log(parsePaginationLocalStorage())
+    murkupSearchMovie(parseInputLocalStorege(), parsePaginationLocalStorage() || api.getStartPage());
+    pagination.reset();
+    return
   }
-  murkupSearchMovie(parseInputLocalStorege(), api.getStartPage());
-  pagination.reset();
+  fetchPopularFilms(parsePaginationLocalStorage() || api.getStartPage());
+  return;
 }
 
 function returnPopularFilms(evt) {
   saveInputLocalStorage(evt.target.value);
   const inputValue = evt.target.value;
-  if (inputValue === '') {
+  if (inputValue === '' || parseInputLocalStorege() === null) {
     savePaginationLocalStorage(1);
     fetchPopularFilms(1);
   }
@@ -93,17 +94,8 @@ function onSubmitClick(event) {
     });
     return;
   }
-  return murkupSearchMovie(searchQuery);
+  return murkupSearchMovie(searchQuery || refs.input.value);
 }
-
-// function fetchFilms(evt) {
-//     evt.preventDefault();
-//     pagination.reset();
-//     api.resetPage()
-//     filmName = evt.currentTarget.elements.search.value;
-//     savePaginationLocalStorage(api.page);
-//     // return fetchNecessaryFilm(filmName, page);
-// }
 
 function onClickBtnPagination() {
   api.page = pagination.getCurrentPage();
@@ -114,7 +106,7 @@ function onClickBtnPagination() {
     behavior: 'smooth',
   });
 
-  if (parseInputLocalStorege() === '') {
+  if (refs.input.value === '') {
     return fetchPopularFilms(parsePaginationLocalStorage());
   }
   return murkupSearchMovie(
@@ -136,6 +128,7 @@ function fetchPopularFilms(page) {
 }
 
 function murkupSearchMovie(filmName, page) {
+  api.setPage(parsePaginationLocalStorage() || api.getStartPage());
   api
     .getMovie(filmName)
     .then(({ results, total_pages }) => {
@@ -154,7 +147,7 @@ function murkupSearchMovie(filmName, page) {
         return;
       }
       createFilmCardMarkup(results);
-      pagination.movePageTo(page);
+      pagination.movePageTo(page || api.resetPage());
     })
     .catch(console.log);
 }
@@ -185,11 +178,11 @@ function createFilmCardMarkup(films) {
                             <h2 class="film-card__title">${original_title}</h2>
                             <div class="film-card__wrapper">
                                 <span class="film-card__info">${getGenres(
-                                  genre_ids
-                                ).join(', ')} | ${year}</span>
+        genre_ids
+      ).join(', ')} | ${year}</span>
                                 <span data-film-rating class="film-card__rating">${vote_average.toFixed(
-                                  2
-                                )}</span>
+        2
+      )}</span>
                             </div>
                         </div>
                     </li>`;
