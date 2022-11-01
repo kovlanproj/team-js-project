@@ -27,7 +27,7 @@ export function insertData(movieId, type) {
 export function readData(type) {
   let array = [];
   const uid = auth.currentUser.uid;
-  console.log(uid);
+
   const dbRef = ref(db);
   return get(child(dbRef, 'users/' + uid + `/${type}`)).then(snapshot => {
     if (snapshot.exists()) {
@@ -38,5 +38,18 @@ export function readData(type) {
       alert('No data found');
     }
     return array;
+  });
+}
+
+export function readNameFromBase() {
+  const uid = auth.currentUser.uid;
+  const dbRef = ref(db);
+
+  return get(child(dbRef, 'users/' + uid + `/username`)).then(snapshot => {
+    if (snapshot.exists()) {
+      return snapshot.val();
+      // } else {
+      //   alert('No data found');
+    }
   });
 }
