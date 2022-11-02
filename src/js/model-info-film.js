@@ -8,9 +8,31 @@ function fetchFilmPhoto(posterPath) {
     ? `https://image.tmdb.org/t/p/w500${posterPath}`
     : noPosterAvaliable;
 }
-
+const modalHolder = document.querySelector('.modal-holder');
 const modalBtnWrap = document.querySelector('.modal-btn-wrap');
 const modalRef = document.querySelector('.modal-holder');
+
+modalHolder.addEventListener('click', onClickModalHolder);
+
+function onCloseModal() {
+  modalHolder.classList.add('is-hidden');
+  window.removeEventListener('keydown', onPressESC);
+}
+
+function onClickModalHolder(e) {
+  if (e.target.classList.contains('modal-holder')) {
+    onCloseModal();
+  }
+}
+
+function onPressESC(e) {
+  const ESC_KEY_CODE = 'Escape';
+  const isEscKey = e.code === ESC_KEY_CODE;
+
+  if (isEscKey) {
+    onCloseModal();
+  }
+}
 
 export function updateButtons(id) {
   modalBtnWrap.innerHTML =
@@ -56,4 +78,5 @@ export async function showInfoModal(api, id) {
   }
 
   modalRef.classList.remove('is-hidden');
+  window.addEventListener('keydown', onPressESC);
 }
