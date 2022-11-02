@@ -18,4 +18,12 @@ export default {
     formErrorLabel: document.querySelector('.login-error'),
     navigation: document.querySelector('.nav__list'),
   },
+  paginationList: document.querySelector('.tui-pagination'),
+  form: document.querySelector('.input__wraper'),
+  input: document.querySelector('.header__input'),
+  cardList: document.querySelector('.films__list'),
+  selectedPage: document.querySelector('.tui-is-selected'),
+  infoModal: document.querySelector('.modal-holder'),
+  modalBtnWrap: document.querySelector('.modal-btn-wrap'),
+  filmsContainer: document.querySelector('.loader-container'),
 };

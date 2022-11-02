@@ -28,8 +28,10 @@ import {
   addLogOutButton,
 } from './js/auth/auth-nav';
 import { showInfoModal } from './js/model-info-film';
+import refs from './js/refs';
 
 renderNav('index');
+
 const loginBtnRef = document.querySelector('#modal-btn-auth');
 if (loginBtnRef) {
   loginBtnRef.addEventListener('click', onShowAuthModal);
@@ -38,15 +40,16 @@ formBackdropRef.addEventListener('click', onClickBackdrop);
 
 let filmName = '';
 
-const refs = {
-  paginationList: document.querySelector('.tui-pagination'),
-  form: document.querySelector('.input__wraper'),
-  input: document.querySelector('.header__input'),
-  cardList: document.querySelector('.films__list'),
-  selectedPage: document.querySelector('.tui-is-selected'),
-  infoModal: document.querySelector('.modal-holder'),
-  modalBtnWrap: document.querySelector('.modal-btn-wrap'),
-};
+// const refs = {
+//   paginationList: document.querySelector('.tui-pagination'),
+//   form: document.querySelector('.input__wraper'),
+//   input: document.querySelector('.header__input'),
+//   cardList: document.querySelector('.films__list'),
+//   selectedPage: document.querySelector('.tui-is-selected'),
+//   infoModal: document.querySelector('.modal-holder'),
+//   modalBtnWrap: document.querySelector('.modal-btn-wrap'),
+//   filmsContainer: document.querySelector('.loader-container'),
+// };
 
 const api = new MovieApiService();
 
@@ -122,10 +125,13 @@ function onClickBtnPagination() {
 }
 
 function fetchPopularFilms(page) {
+  api.setContainerRef(refs.filmsContainer);
   api.setPage(parsePaginationLocalStorage() || api.getStartPage());
   api
     .getMoviesList()
     .then(({ results, total_pages }) => {
+      refs.filmsContainer.innerHTML = '';
+      api.resetContainerRef();
       pagination.reset(total_pages * 10);
       createFilmCardMarkup(results);
       pagination.movePageTo(page);
@@ -134,10 +140,13 @@ function fetchPopularFilms(page) {
 }
 
 function murkupSearchMovie(filmName, page) {
+  api.setContainerRef(refs.filmsContainer);
   api.setPage(parsePaginationLocalStorage() || api.getStartPage());
   api
     .getMovie(filmName)
     .then(({ results, total_pages }) => {
+      refs.filmsContainer.innerHTML = '';
+      api.resetContainerRef();
       pagination.reset(total_pages * 10);
       if (results.length === 0) {
         Notiflix.Notify.failure(
