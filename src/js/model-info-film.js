@@ -1,5 +1,7 @@
 import { auth } from './firebase/auth';
 import { onShowAuthModalFromFilmModal } from './auth/login-form';
+import { readData, insertData, deleteData } from './firebase/db-service';
+
 function fetchFilmPhoto(posterPath) {
   const noPosterAvaliable =
     'https://www.reelviews.net/resources/img/default_poster.jpg';
@@ -39,10 +41,96 @@ export function updateButtons(id) {
     "<button type='button' class='modal-btn js-watch film-js-watch' data-id=''>ADD TO WATCHED</button><button type='button' class='modal-btn js-queue film-js-queue' data-id=''>ADD TO QUEUE</button>";
   modalRef.querySelector('.film-js-watch').setAttribute('data-id', id);
   modalRef.querySelector('.film-js-queue').setAttribute('data-id', id);
+
+  modalRef
+    .querySelector('.film-js-watch')
+    .addEventListener('click', onWatchBtnClick);
+  modalRef
+    .querySelector('.film-js-queue')
+    .addEventListener('click', onQueueBtnClick);
 }
+
+function onWatchBtnClick() {
+  const watchBtn = modalRef.querySelector('.film-js-watch');
+  if (watchBtn.hasAttribute('in-list')) {
+    deleteData(watchBtn.getAttribute('key'), 'watchlist').then(() => {
+      watchBtn.textContent = 'add to watched';
+      watchBtn.removeAttribute('in-list');
+      watchBtn.classList.remove('active');
+    });
+  } else {
+    insertData(watchBtn.getAttribute('data-id'), 'watchlist')
+      .then(() => {
+        watchBtn.textContent = 'Delete from watched';
+        watchBtn.setAttribute('in-list', '');
+        watchBtn.classList.add('active');
+        readData('watchlist').then(res => {
+          const data = res.find(
+            res => res.val === watchBtn.getAttribute('data-id')
+          );
+          if (data) {
+            watchBtn.setAttribute('key', data.key);
+          }
+        });
+      })
+      .catch(error => {
+        console.log(error);
+      });
+  }
+}
+
+function onQueueBtnClick() {
+  const queueBtn = modalRef.querySelector('.film-js-queue');
+  if (queueBtn.hasAttribute('in-list')) {
+    deleteData(queueBtn.getAttribute('key'), 'queue').then(() => {
+      queueBtn.textContent = 'add to queue';
+      queueBtn.removeAttribute('in-list');
+      queueBtn.classList.remove('active');
+    });
+  } else {
+    insertData(queueBtn.getAttribute('data-id'), 'queue')
+      .then(() => {
+        queueBtn.textContent = 'Delete from queue';
+        queueBtn.setAttribute('in-list', '');
+        queueBtn.classList.add('active');
+        readData('queue').then(res => {
+          const data = res.find(
+            res => res.val === queueBtn.getAttribute('data-id')
+          );
+          if (data) {
+            queueBtn.setAttribute('key', data.key);
+          }
+        });
+      })
+      .catch(error => {
+        console.log(error);
+      });
+  }
+}
+
+export function updateWatchlistBtn(id) {
+  modalBtnWrap.innerHTML =
+    "<button type='button' class='modal-btn js-watch film-js-watch' data-id=''>ADD TO WATCHED</button>";
+  modalRef.querySelector('.film-js-watch').setAttribute('data-id', id);
+}
+
+export function updateQueueBtn(id) {
+  modalBtnWrap.innerHTML =
+    "<button type='button' class='modal-btn js-queue film-js-queue' data-id=''>ADD TO QUEUE</button>";
+  modalRef.querySelector('.film-js-queue').setAttribute('data-id', id);
+}
+
+function checkAddedMovieInList(id, array) {
+  return array.find(elem => elem.val === id);
+}
+
+// readData('watchlist').then(array => {});
 
 export async function showInfoModal(api, id) {
   const data = await api.getMovieInfo(id);
+  const watchlist = await readData('watchlist');
+  const queue = await readData('queue');
+  console.log(watchlist);
 
   modalRef
     .querySelector('.film-info-modal-img')
@@ -69,6 +157,24 @@ export async function showInfoModal(api, id) {
 
   if (auth.currentUser) {
     updateButtons(id);
+    const watchBtn = modalRef.querySelector('.film-js-watch');
+    const queueBtn = modalRef.querySelector('.film-js-queue');
+    const checkWatched = checkAddedMovieInList(id, watchlist);
+    const checkQueue = checkAddedMovieInList(id, queue);
+
+    if (checkWatched) {
+      console.log(checkAddedMovieInList(id, watchlist));
+      watchBtn.textContent = 'Delete from watched';
+      watchBtn.setAttribute('in-list', '');
+      watchBtn.setAttribute('key', checkWatched.key);
+      watchBtn.classList.add('active');
+    }
+    if (checkQueue) {
+      queueBtn.textContent = 'Delete from queue';
+      queueBtn.setAttribute('in-list', '');
+      queueBtn.setAttribute('key', checkQueue.key);
+      queueBtn.classList.add('active');
+    }
   } else {
     modalBtnWrap.innerHTML =
       '<button type="button" class="modal-btn js-login-modal-btn">To add movie to list, please LogIn</button>';
