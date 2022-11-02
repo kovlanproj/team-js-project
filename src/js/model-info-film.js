@@ -128,8 +128,6 @@ function checkAddedMovieInList(id, array) {
 
 export async function showInfoModal(api, id) {
   const data = await api.getMovieInfo(id);
-  const watchlist = await readData('watchlist');
-  const queue = await readData('queue');
 
   modalRef
     .querySelector('.film-info-modal-img')
@@ -155,6 +153,8 @@ export async function showInfoModal(api, id) {
   modalRef.querySelector('.modal-btn-wrap').setAttribute('data-id', id);
 
   if (auth.currentUser) {
+    const watchlist = await readData('watchlist');
+    const queue = await readData('queue');
     updateButtons(id);
     const watchBtn = modalRef.querySelector('.film-js-watch');
     const queueBtn = modalRef.querySelector('.film-js-queue');
