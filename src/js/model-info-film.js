@@ -1,5 +1,6 @@
 import { auth } from './firebase/auth';
 import { onShowAuthModalFromFilmModal } from './auth/login-form';
+import { func } from 'joi';
 function fetchFilmPhoto(posterPath) {
   const noPosterAvaliable =
     'https://www.reelviews.net/resources/img/default_poster.jpg';
@@ -11,12 +12,21 @@ function fetchFilmPhoto(posterPath) {
 const modalHolder = document.querySelector('.modal-holder');
 const modalBtnWrap = document.querySelector('.modal-btn-wrap');
 const modalRef = document.querySelector('.modal-holder');
+const modalCloseBtnRef = document.querySelector('.modal-holder')
+
+modalCloseBtnRef.addEventListener("click", scrollOff)
 
 modalHolder.addEventListener('click', onClickModalHolder);
+
+function scrollOff() {
+  modalCloseBtnRef.classList.add('is-hidden')
+  document.body.style.overflow = 'visible';
+}
 
 function onCloseModal() {
   modalHolder.classList.add('is-hidden');
   window.removeEventListener('keydown', onPressESC);
+  document.body.style.overflow = 'visible';
 }
 
 function onClickModalHolder(e) {
@@ -32,6 +42,7 @@ function onPressESC(e) {
 
   if (isEscKey) {
     onCloseModal();
+    document.body.style.overflow = 'visible';
   }
 }
 
