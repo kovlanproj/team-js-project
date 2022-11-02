@@ -1,4 +1,12 @@
-import { getDatabase, ref, get, set, child, push } from 'firebase/database';
+import {
+  getDatabase,
+  ref,
+  get,
+  set,
+  child,
+  push,
+  remove,
+} from 'firebase/database';
 import { auth } from './auth';
 import app from './config';
 
@@ -15,13 +23,13 @@ export function insertData(movieId, type) {
   const postListRef = ref(db, 'users/' + auth.currentUser.uid + `/${type}`);
   const newPostRef = push(postListRef);
 
-  set(newPostRef, { movieId: movieId })
-    .then(() => {
-      alert('Data added successfully');
-    })
-    .catch(error => {
-      alert(error);
-    });
+  return set(newPostRef, movieId);
+  // .then(() => {
+  //   // alert('Data added successfully');
+  // })
+  // .catch(error => {
+  //   alert(error);
+  // });
 }
 
 export function readData(type) {
@@ -32,13 +40,27 @@ export function readData(type) {
   return get(child(dbRef, 'users/' + uid + `/${type}`)).then(snapshot => {
     if (snapshot.exists()) {
       snapshot.forEach(childSnapshot => {
-        array.push(childSnapshot.val().movieId);
+        array.push({ key: childSnapshot.key, val: childSnapshot.val() });
       });
     } else {
-      alert('No data found');
     }
     return array;
   });
+}
+
+export function deleteData(key, type) {
+  const postListRef = ref(
+    db,
+    'users/' + auth.currentUser.uid + `/${type}` + `/${key}`
+  );
+
+  return remove(postListRef);
+  // .then(() => {
+  //   // alert('Data added successfully');
+  // })
+  // .catch(error => {
+  //   alert(error);
+  // });
 }
 
 export function readNameFromBase() {
