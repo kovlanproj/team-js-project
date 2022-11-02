@@ -35,23 +35,51 @@ onAuthStateChanged(auth, user => {
 import MovieApiService from './js/movie-service';
 import genre from './genres.json';
 import { showInfoModal } from './js/model-info-film';
+import Pagination from 'tui-pagination';
+import 'tui-pagination/dist/tui-pagination.min.css';
+import pagination from './js/tui-pagination';
 
 const api = new MovieApiService()
 
 const cardList = document.querySelector('.js-films-list-library')
 const infoModal = document.querySelector('.modal-holder')
+const paginationList = document.querySelector('.tui-pagination')
+let size = 20; //размер подмассива
+let subarray = []; //массив в который будет выведен результат.
 
 
-const watchlist = [49046, 913290, 766475];
+paginationList.addEventListener('click', onClickBtnPagination);
+
+const watchlist = [49046, 913290, 766475, 913290, 766475, 913290, 766475, 913290, 766475, 913290, 766475, 913290, 766475, 913290, 766475, 913290, 766475, 913290, 766475, 913290, 766475, 913290, 766475, 913290, 766475];
 const movies = watchlist.map(api.getMovieInfo);
-Promise.all(movies)
-  .then((array) => {
-    createFilmCardMarkup(array);
-  })
-  .catch(console.log);
+fetchFilms()
+function fetchFilms() {
+  Promise.all(movies)
+    .then((array) => {
+      if (array.length > 20) {
+        for (let i = 0; i < Math.ceil(array.length / size); i++) {
+          subarray[i] = array.slice((i * size), (i * size) + size);
+        }
+      }
+      pagination.reset(subarray.length * 10)
+      createFilmCardMarkup(subarray[api.page - 1])
+      pagination.movePageTo(api.page);
+    })
+    .catch(console.log);
+}
+
+
+function onClickBtnPagination() {
+  api.page = pagination.getCurrentPage();
+  window.scrollTo({
+    top: 0,
+    left: 0,
+    behavior: 'smooth',
+  });
+  fetchFilms()
+}
 
 function createFilmCardMarkup(films) {
-  console.log(films)
   const newMarkup = films
     .map(film => {
       const {
