@@ -48,6 +48,22 @@ export function readData(type) {
   });
 }
 
+export function readDataArray(type) {
+  let array = [];
+  const uid = auth.currentUser.uid;
+
+  const dbRef = ref(db);
+  return get(child(dbRef, 'users/' + uid + `/${type}`)).then(snapshot => {
+    if (snapshot.exists()) {
+      snapshot.forEach(childSnapshot => {
+        array.push(childSnapshot.val());
+      });
+    } else {
+    }
+    return array;
+  });
+}
+
 export function deleteData(key, type) {
   const postListRef = ref(
     db,

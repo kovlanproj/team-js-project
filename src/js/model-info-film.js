@@ -130,7 +130,6 @@ export async function showInfoModal(api, id) {
   const data = await api.getMovieInfo(id);
   const watchlist = await readData('watchlist');
   const queue = await readData('queue');
-  console.log(watchlist);
 
   modalRef
     .querySelector('.film-info-modal-img')
@@ -163,7 +162,6 @@ export async function showInfoModal(api, id) {
     const checkQueue = checkAddedMovieInList(id, queue);
 
     if (checkWatched) {
-      console.log(checkAddedMovieInList(id, watchlist));
       watchBtn.textContent = 'Delete from watched';
       watchBtn.setAttribute('in-list', '');
       watchBtn.setAttribute('key', checkWatched.key);
