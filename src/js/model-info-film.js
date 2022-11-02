@@ -22,6 +22,7 @@ function onCloseModal() {
 function onClickModalHolder(e) {
   if (e.target.classList.contains('modal-holder')) {
     onCloseModal();
+    document.body.style.overflow = 'visible';
   }
 }
 
@@ -78,5 +79,6 @@ export async function showInfoModal(api, id) {
   }
 
   modalRef.classList.remove('is-hidden');
+  document.body.style.overflow = 'hidden';
   window.addEventListener('keydown', onPressESC);
 }
