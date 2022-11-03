@@ -9,6 +9,8 @@ export default class MovieApiService {
     this.searchQuery = '';
     this.page = 1;
     this.containerRef = null;
+    this.type = 'watchlist';
+    this.isChanged = false;
   }
   async getMoviesList() {
     if (this.containerRef) {
@@ -44,6 +46,17 @@ export default class MovieApiService {
       `${BASE_URL}/movie/${id}/videos?api_key=${API_KEY}&language=${lang}`
     );
     return response.data;
+  }
+
+  setIsLibrary(isLibrary) {
+    this.isLibrary = isLibrary;
+  }
+
+  setType(type) {
+    this.type = type;
+  }
+  getType() {
+    return this.type;
   }
 
   setContainerRef(ref) {
