@@ -23,12 +23,13 @@ export function onPosterClick(e) {
 export function showTrailer() {
   refs.trailerBackdrop.classList.remove('is-hidden');
   window.addEventListener('keydown', onPressESC);
-  // document.querySelector('body').style.overflow = 'hidden';
+  document.querySelector('body').style.overflow = 'hidden';
 }
 
 function onCloseTrailer() {
   refs.trailerBackdrop.classList.add('is-hidden');
   window.removeEventListener('keydown', onPressESC);
+  document.querySelector('body').style.overflow = 'visible';
 }
 
 function onBackdropClick(e) {
