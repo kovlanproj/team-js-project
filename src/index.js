@@ -269,3 +269,5 @@ onAuthStateChanged(auth, user => {
 // api.getMovie('bullet').then(console.log);
 // api.getMovieInfo('913290').then(console.log);
 // api.getMovieTrailers('913290').then(console.log);
+// ".read": "now < 1669068000000",  // 2022-11-22
+//     ".write": "now < 1669068000000",  // 2022-11-22

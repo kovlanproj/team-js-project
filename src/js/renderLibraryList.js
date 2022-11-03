@@ -31,9 +31,9 @@ export function renderLibraryList(list, type) {
   if (movies.length === 0) {
     subarray = [];
     pagination.reset(subarray.length * 10);
-    Notify.info('Sorry, the movie list is empty :(', {
-      timeout: 6000,
-    });
+    // Notify.info('Sorry, the movie list is empty :(', {
+    //   timeout: 6000,
+    // });
     return (cardList.innerHTML = `<h1 style="color: #ff6b08"> Your ${type} is empty!</h1>`);
   } else {
     return Promise.all(movies)
