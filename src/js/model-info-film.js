@@ -18,16 +18,23 @@ const modalBtnWrap = document.querySelector('.modal-btn-wrap');
 const modalRef = document.querySelector('.modal-holder');
 const closeBtnRef = document.querySelector('.cross');
 const cardList = document.querySelector('.js-films-list-library');
+const modalCloseBtnRef = document.querySelector('.modal-holder');
 
+modalCloseBtnRef.addEventListener('click', scrollOff);
 modalHolder.addEventListener('click', onClickModalHolder);
 closeBtnRef.addEventListener('click', onCloseModal);
+
+function scrollOff() {
+  modalCloseBtnRef.classList.add('is-hidden');
+  document.body.style.overflow = 'visible';
+}
 
 function onCloseModal() {
   modalHolder.classList.add('is-hidden');
   window.removeEventListener('keydown', onPressESC);
+  document.body.style.overflow = 'visible';
   if (api.isChanged && cardList) {
     libraryList(cardList.getAttribute('type'));
-
     api.isChanged = false;
   }
 }
@@ -35,6 +42,7 @@ function onCloseModal() {
 function onClickModalHolder(e) {
   if (e.target.classList.contains('modal-holder')) {
     onCloseModal();
+    document.body.style.overflow = 'visible';
   }
 }
 
@@ -44,6 +52,7 @@ function onPressESC(e) {
 
   if (isEscKey) {
     onCloseModal();
+    document.body.style.overflow = 'visible';
   }
 }
 
@@ -193,5 +202,6 @@ export async function showInfoModal(api, id) {
   }
 
   modalRef.classList.remove('is-hidden');
+  document.body.style.overflow = 'hidden';
   window.addEventListener('keydown', onPressESC);
 }
