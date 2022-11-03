@@ -63,7 +63,7 @@ popularNessesaryFilm(refs.input.value);
 function popularNessesaryFilm(inputVal) {
   if (inputVal !== '') {
     saveInputLocalStorage(refs.input.value);
-    console.log(parsePaginationLocalStorage());
+
     murkupSearchMovie(
       parseInputLocalStorege(),
       parsePaginationLocalStorage() || api.getStartPage()

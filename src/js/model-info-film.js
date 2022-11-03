@@ -17,6 +17,7 @@ const modalHolder = document.querySelector('.modal-holder');
 const modalBtnWrap = document.querySelector('.modal-btn-wrap');
 const modalRef = document.querySelector('.modal-holder');
 const closeBtnRef = document.querySelector('.cross');
+const cardList = document.querySelector('.js-films-list-library');
 
 modalHolder.addEventListener('click', onClickModalHolder);
 closeBtnRef.addEventListener('click', onCloseModal);
@@ -24,9 +25,9 @@ closeBtnRef.addEventListener('click', onCloseModal);
 function onCloseModal() {
   modalHolder.classList.add('is-hidden');
   window.removeEventListener('keydown', onPressESC);
-  console.log('onclose', api);
-  if (api.isLibrary && api.isChanged) {
-    libraryList(api.getType());
+  if (api.isChanged && cardList) {
+    libraryList(cardList.getAttribute('type'));
+
     api.isChanged = false;
   }
 }
@@ -136,10 +137,7 @@ function checkAddedMovieInList(id, array) {
   return array.find(elem => elem.val === id);
 }
 
-// readData('watchlist').then(array => {});
-
 export async function showInfoModal(api, id) {
-  console.log(api.isLibrary);
   const data = await api.getMovieInfo(id);
 
   modalRef

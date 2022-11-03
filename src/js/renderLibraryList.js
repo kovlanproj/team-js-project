@@ -18,14 +18,14 @@ export async function libraryList(type) {
   try {
     refs.filmsContainer.innerHTML = '<span class="loader"></span>';
     const list = await readDataArray(type);
-    await renderLibraryList(list);
+    await renderLibraryList(list, type);
     refs.filmsContainer.innerHTML = '';
   } catch (error) {
     console.log(error.message);
   }
 }
 
-export function renderLibraryList(list) {
+export function renderLibraryList(list, type) {
   const movies = list.map(api.getMovieInfo);
 
   if (movies.length === 0) {
@@ -34,7 +34,7 @@ export function renderLibraryList(list) {
     Notify.info('Sorry, the movie list is empty :(', {
       timeout: 6000,
     });
-    return (cardList.innerHTML = []);
+    return (cardList.innerHTML = `<h1 style="color: #ff6b08"> Your ${type} is empty!</h1>`);
   } else {
     return Promise.all(movies)
       .then(array => {
@@ -48,7 +48,7 @@ export function renderLibraryList(list) {
         }
 
         pagination.reset(subarray.length * 10);
-        createFilmCardMarkup(subarray[api.page - 1]);
+        createFilmCardMarkup(subarray[api.page - 1], type);
         pagination.movePageTo(api.page);
       })
       .catch(console.log);
@@ -65,7 +65,7 @@ function onClickBtnPagination() {
   libraryList(api.getType());
 }
 
-function createFilmCardMarkup(films) {
+function createFilmCardMarkup(films, type) {
   const newMarkup = films
     .map(film => {
       const {
@@ -103,13 +103,14 @@ function createFilmCardMarkup(films) {
     })
     .join('');
   cardList.innerHTML = newMarkup;
+  cardList.setAttribute('library', '');
+  cardList.setAttribute('type', type);
 
   cardList.addEventListener('click', event => {
     const card = event.target.closest('li');
     if (card) {
       const cardId = card.getAttribute('data-id');
       showInfoModal(api, cardId);
-      api.setIsLibrary(true);
     }
   });
 }

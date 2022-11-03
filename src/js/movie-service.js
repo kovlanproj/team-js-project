@@ -10,7 +10,6 @@ export default class MovieApiService {
     this.page = 1;
     this.containerRef = null;
     this.type = 'watchlist';
-    this.isLibrary = false;
     this.isChanged = false;
   }
   async getMoviesList() {

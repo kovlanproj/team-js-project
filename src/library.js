@@ -21,7 +21,6 @@ import { libraryList } from './js/renderLibraryList';
 renderNav('library');
 const api = new MovieApiService();
 api.setType('watchlist');
-
 onAuthStateChanged(auth, user => {
   if (user) {
     const uid = user.uid;
