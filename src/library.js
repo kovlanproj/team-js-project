@@ -22,11 +22,10 @@ renderNav('library');
 onAuthStateChanged(auth, user => {
   if (user) {
     const uid = user.uid;
+    libraryList('watchlist');
     localStorage.setItem('auth', 1);
     removeAuthBtns();
-    // addNav('library');
     addLogOutButton();
-    // insertData(7, 'watchlist');
   } else {
     console.log('User is signed out');
     localStorage.setItem('auth', 0);

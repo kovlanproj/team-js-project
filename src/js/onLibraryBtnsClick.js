@@ -4,7 +4,7 @@ const libraryQueueBtn = document.querySelector('.library__queue-btn');
 
 const libraryBtnGroup = document.querySelector('.button-group');
 
-window.addEventListener('load', libraryList('watchlist'));
+// window.addEventListener('load', libraryList('watchlist'));
 libraryBtnGroup.addEventListener('click', onLibraryBtnsClick);
 
 function onLibraryBtnsClick(evt) {
