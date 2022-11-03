@@ -25,6 +25,7 @@
 
   overflow-y: scroll;
   overflow-x: hidden;
+
   @media screen and (min-width: 480px) {
     width: 380px;
   }
@@ -50,6 +51,7 @@
     height: 560px;
   }
 }
+
 .modal-container::-webkit-scrollbar {
   display: none;
 }
@@ -79,15 +81,18 @@
 
 .modal-img-container {
   margin-bottom: 20px;
+
   @media screen and (min-width: 480px) {
     margin-left: 54px;
     margin-right: 54px;
   }
+
   @media screen and (min-width: 768px) {
     margin-right: 52px;
     margin-left: 44px;
     margin-bottom: 0;
   }
+
   @media screen and (min-width: 1024px) {
     margin-right: 53px;
     margin-left: 37px;
@@ -103,6 +108,7 @@
   line-height: 35px;
 
   color: #000000;
+
   body.dark & {
     color: #ffffff;
   }
@@ -117,6 +123,7 @@
   max-height: 200px;
   color: #000000;
   overflow-y: scroll;
+
   @media screen and (min-width: 768px) {
     max-height: 180px;
   }
@@ -125,6 +132,7 @@
     max-height: 160px;
   }
 }
+
 .film-description::-webkit-scrollbar {
   display: none;
 }
@@ -132,6 +140,7 @@
 .modal-btn-wrap {
   display: flex;
   justify-content: center;
+
   @media screen and (min-width: 768px) {
     justify-content: flex-start;
   }
@@ -175,6 +184,7 @@
   font-weight: 500;
   font-size: 12px;
   line-height: 1.33;
+
   &__attribute {
     margin-top: 0;
     margin-bottom: 8px;
@@ -182,10 +192,12 @@
     color: #8c8c8c;
     white-space: nowrap;
   }
+
   &__value {
     margin-top: 0;
     margin-bottom: 8px;
   }
+
   &__vote {
     background: #ff6b01;
     border-radius: 5px;
@@ -194,6 +206,7 @@
     padding-right: 5px;
     margin-right: 1px;
   }
+
   &__votes {
     background: #f7f7f7;
     color: #000;
@@ -211,6 +224,7 @@
   font-size: 14px;
   line-height: 1.33;
 }
+
 .modal-img {
   width: 240px;
   height: 357px;
@@ -253,10 +267,13 @@
   width: 100%;
   max-height: 200px;
   color: #000000;
+
   body.dark & {
     color: #ffffff;
   }
+
   overflow-y: scroll;
+
   @media screen and (min-width: 768px) {
     max-height: 180px;
   }
@@ -265,6 +282,7 @@
     max-height: 160px;
   }
 }
+
 .film-description::-webkit-scrollbar {
   display: none;
 }
@@ -272,6 +290,7 @@
 .modal-btn-wrap {
   display: flex;
   justify-content: center;
+
   @media screen and (min-width: 768px) {
     justify-content: flex-start;
   }
@@ -316,11 +335,13 @@
   color: white;
   border: none;
 }
+
 .modal-table {
   font-style: normal;
   font-weight: 500;
   font-size: 12px;
   line-height: 1.33;
+
   &__attribute {
     margin-top: 0;
     margin-bottom: 8px;
@@ -328,10 +349,12 @@
     color: #8c8c8c;
     white-space: nowrap;
   }
+
   &__value {
     margin-top: 0;
     margin-bottom: 8px;
   }
+
   &__vote {
     background: #ff6b01;
     border-radius: 5px;
@@ -340,6 +363,7 @@
     padding-right: 5px;
     margin-right: 1px;
   }
+
   &__votes {
     background: #f7f7f7;
     border-radius: 5px;
@@ -355,4 +379,9 @@
   font-weight: 500;
   font-size: 14px;
   line-height: 1.33;
+}
+
+
+.modal-holder {
+  z-index: 5;
 }
