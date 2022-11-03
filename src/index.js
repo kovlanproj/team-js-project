@@ -169,6 +169,7 @@ function murkupSearchMovie(filmName, page) {
 }
 
 function createFilmCardMarkup(films) {
+  api.isLibrary = false;
   const newMarkup = films
     .map(film => {
       const {

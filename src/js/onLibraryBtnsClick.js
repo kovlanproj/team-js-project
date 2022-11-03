@@ -1,4 +1,7 @@
 import { libraryList } from './renderLibraryList';
+import MovieApiService from './movie-service';
+
+const api = new MovieApiService();
 const libraryWatchedBtn = document.querySelector('.library__watched-btn');
 const libraryQueueBtn = document.querySelector('.library__queue-btn');
 
@@ -16,7 +19,8 @@ function onLibraryBtnsClick(evt) {
     libraryWatchedBtn.classList.add('is-active');
     libraryQueueBtn.classList.remove('is-active');
     if (evt.target.classList.contains('is-active')) {
-      libraryList('watchlist');
+      api.setType('watchlist');
+      libraryList(api.getType());
     }
     return;
   }
@@ -25,7 +29,9 @@ function onLibraryBtnsClick(evt) {
     libraryWatchedBtn.classList.remove('is-active');
     libraryQueueBtn.classList.add('is-active');
     if (evt.target.classList.contains('is-active')) {
-      libraryList('queue');
+      api.setType('queue');
+
+      libraryList(api.getType());
     }
     return;
   }

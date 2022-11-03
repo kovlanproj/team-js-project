@@ -1,4 +1,5 @@
 import { auth } from './js/firebase/auth';
+import MovieApiService from './js/movie-service';
 import {
   // createUserWithEmailAndPassword,
   // signInWithEmailAndPassword,
@@ -18,11 +19,13 @@ import './js/onLibraryBtnsClick';
 import { libraryList } from './js/renderLibraryList';
 
 renderNav('library');
+const api = new MovieApiService();
+api.setType('watchlist');
 
 onAuthStateChanged(auth, user => {
   if (user) {
     const uid = user.uid;
-    libraryList('watchlist');
+    libraryList(api.getType());
     localStorage.setItem('auth', 1);
     removeAuthBtns();
     addLogOutButton();

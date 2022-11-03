@@ -1,6 +1,9 @@
 import { auth } from './firebase/auth';
 import { onShowAuthModalFromFilmModal } from './auth/login-form';
 import { readData, insertData, deleteData } from './firebase/db-service';
+import MovieApiService from './movie-service';
+import { libraryList } from './renderLibraryList';
+const api = new MovieApiService();
 
 function fetchFilmPhoto(posterPath) {
   const noPosterAvaliable =
@@ -13,12 +16,19 @@ function fetchFilmPhoto(posterPath) {
 const modalHolder = document.querySelector('.modal-holder');
 const modalBtnWrap = document.querySelector('.modal-btn-wrap');
 const modalRef = document.querySelector('.modal-holder');
+const closeBtnRef = document.querySelector('.cross');
 
 modalHolder.addEventListener('click', onClickModalHolder);
+closeBtnRef.addEventListener('click', onCloseModal);
 
 function onCloseModal() {
   modalHolder.classList.add('is-hidden');
   window.removeEventListener('keydown', onPressESC);
+  console.log('onclose', api);
+  if (api.isLibrary && api.isChanged) {
+    libraryList(api.getType());
+    api.isChanged = false;
+  }
 }
 
 function onClickModalHolder(e) {
@@ -52,6 +62,7 @@ export function updateButtons(id) {
 
 function onWatchBtnClick() {
   const watchBtn = modalRef.querySelector('.film-js-watch');
+  api.isChanged = true;
   if (watchBtn.hasAttribute('in-list')) {
     deleteData(watchBtn.getAttribute('key'), 'watchlist').then(() => {
       watchBtn.textContent = 'add to watched';
@@ -80,6 +91,7 @@ function onWatchBtnClick() {
 }
 
 function onQueueBtnClick() {
+  api.isChanged = true;
   const queueBtn = modalRef.querySelector('.film-js-queue');
   if (queueBtn.hasAttribute('in-list')) {
     deleteData(queueBtn.getAttribute('key'), 'queue').then(() => {
@@ -108,17 +120,17 @@ function onQueueBtnClick() {
   }
 }
 
-export function updateWatchlistBtn(id) {
-  modalBtnWrap.innerHTML =
-    "<button type='button' class='modal-btn js-watch film-js-watch' data-id=''>ADD TO WATCHED</button>";
-  modalRef.querySelector('.film-js-watch').setAttribute('data-id', id);
-}
+// export function updateWatchlistBtn(id) {
+//   modalBtnWrap.innerHTML =
+//     "<button type='button' class='modal-btn js-watch film-js-watch' data-id=''>ADD TO WATCHED</button>";
+//   modalRef.querySelector('.film-js-watch').setAttribute('data-id', id);
+// }
 
-export function updateQueueBtn(id) {
-  modalBtnWrap.innerHTML =
-    "<button type='button' class='modal-btn js-queue film-js-queue' data-id=''>ADD TO QUEUE</button>";
-  modalRef.querySelector('.film-js-queue').setAttribute('data-id', id);
-}
+// export function updateQueueBtn(id) {
+//   modalBtnWrap.innerHTML =
+//     "<button type='button' class='modal-btn js-queue film-js-queue' data-id=''>ADD TO QUEUE</button>";
+//   modalRef.querySelector('.film-js-queue').setAttribute('data-id', id);
+// }
 
 function checkAddedMovieInList(id, array) {
   return array.find(elem => elem.val === id);
@@ -127,6 +139,7 @@ function checkAddedMovieInList(id, array) {
 // readData('watchlist').then(array => {});
 
 export async function showInfoModal(api, id) {
+  console.log(api.isLibrary);
   const data = await api.getMovieInfo(id);
 
   modalRef

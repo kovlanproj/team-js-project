@@ -3,10 +3,16 @@ import genre from '../genres.json';
 import { Notify } from 'notiflix/build/notiflix-notify-aio';
 import { showInfoModal } from './model-info-film';
 import { readDataArray } from './firebase/db-service';
+import 'tui-pagination/dist/tui-pagination.min.css';
+import pagination from './tui-pagination';
 import refs from './refs';
 
 const api = new MovieApiService();
 const cardList = document.querySelector('.js-films-list-library');
+const paginationList = document.querySelector('.tui-pagination');
+paginationList.addEventListener('click', onClickBtnPagination);
+let size = 20; //размер подмассива
+let subarray = [];
 
 export async function libraryList(type) {
   try {
@@ -21,7 +27,10 @@ export async function libraryList(type) {
 
 export function renderLibraryList(list) {
   const movies = list.map(api.getMovieInfo);
+
   if (movies.length === 0) {
+    subarray = [];
+    pagination.reset(subarray.length * 10);
     Notify.info('Sorry, the movie list is empty :(', {
       timeout: 6000,
     });
@@ -29,10 +38,31 @@ export function renderLibraryList(list) {
   } else {
     return Promise.all(movies)
       .then(array => {
-        createFilmCardMarkup(array);
+        if (array.length > 20) {
+          for (let i = 0; i < Math.ceil(array.length / size); i++) {
+            subarray[i] = array.slice(i * size, i * size + size);
+          }
+        } else {
+          subarray = [];
+          subarray[0] = array;
+        }
+
+        pagination.reset(subarray.length * 10);
+        createFilmCardMarkup(subarray[api.page - 1]);
+        pagination.movePageTo(api.page);
       })
       .catch(console.log);
   }
+}
+
+function onClickBtnPagination() {
+  api.page = pagination.getCurrentPage();
+  window.scrollTo({
+    top: 0,
+    left: 0,
+    behavior: 'smooth',
+  });
+  libraryList(api.getType());
 }
 
 function createFilmCardMarkup(films) {
@@ -79,6 +109,7 @@ function createFilmCardMarkup(films) {
     if (card) {
       const cardId = card.getAttribute('data-id');
       showInfoModal(api, cardId);
+      api.setIsLibrary(true);
     }
   });
 }
