@@ -1,6 +1,7 @@
 import { auth } from './firebase/auth';
 import { onShowAuthModalFromFilmModal } from './auth/login-form';
 import { readData, insertData, deleteData } from './firebase/db-service';
+import { onPosterClick } from './showTrailer.js';
 
 function fetchFilmPhoto(posterPath) {
   const noPosterAvaliable =
@@ -13,8 +14,10 @@ function fetchFilmPhoto(posterPath) {
 const modalHolder = document.querySelector('.modal-holder');
 const modalBtnWrap = document.querySelector('.modal-btn-wrap');
 const modalRef = document.querySelector('.modal-holder');
+const posterRef = document.querySelector('.js-poster');
 
 modalHolder.addEventListener('click', onClickModalHolder);
+posterRef.addEventListener('click', onPosterClick);
 
 function onCloseModal() {
   modalHolder.classList.add('is-hidden');
@@ -108,17 +111,17 @@ function onQueueBtnClick() {
   }
 }
 
-export function updateWatchlistBtn(id) {
-  modalBtnWrap.innerHTML =
-    "<button type='button' class='modal-btn js-watch film-js-watch' data-id=''>ADD TO WATCHED</button>";
-  modalRef.querySelector('.film-js-watch').setAttribute('data-id', id);
-}
+// export function updateWatchlistBtn(id) {
+//   modalBtnWrap.innerHTML =
+//     "<button type='button' class='modal-btn js-watch film-js-watch' data-id=''>ADD TO WATCHED</button>";
+//   modalRef.querySelector('.film-js-watch').setAttribute('data-id', id);
+// }
 
-export function updateQueueBtn(id) {
-  modalBtnWrap.innerHTML =
-    "<button type='button' class='modal-btn js-queue film-js-queue' data-id=''>ADD TO QUEUE</button>";
-  modalRef.querySelector('.film-js-queue').setAttribute('data-id', id);
-}
+// export function updateQueueBtn(id) {
+//   modalBtnWrap.innerHTML =
+//     "<button type='button' class='modal-btn js-queue film-js-queue' data-id=''>ADD TO QUEUE</button>";
+//   modalRef.querySelector('.film-js-queue').setAttribute('data-id', id);
+// }
 
 function checkAddedMovieInList(id, array) {
   return array.find(elem => elem.val === id);
@@ -151,6 +154,7 @@ export async function showInfoModal(api, id) {
   modalRef.querySelector('.film-film-description').innerHTML = data.overview;
 
   modalRef.querySelector('.modal-btn-wrap').setAttribute('data-id', id);
+  posterRef.setAttribute('data-id', id);
 
   if (auth.currentUser) {
     const watchlist = await readData('watchlist');
