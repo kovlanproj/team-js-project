@@ -2,6 +2,7 @@ import { auth } from './firebase/auth';
 import { onShowAuthModalFromFilmModal } from './auth/login-form';
 import { readData, insertData, deleteData } from './firebase/db-service';
 import { onPosterClick } from './showTrailer.js';
+import refs from './refs';
 
 function fetchFilmPhoto(posterPath) {
   const noPosterAvaliable =
@@ -35,7 +36,9 @@ function onPressESC(e) {
   const isEscKey = e.code === ESC_KEY_CODE;
 
   if (isEscKey) {
-    onCloseModal();
+    if (refs.trailerBackdrop.classList.contains('is-hidden')) {
+      onCloseModal();
+    }
   }
 }
 
