@@ -18,16 +18,9 @@ const modalBtnWrap = document.querySelector('.modal-btn-wrap');
 const modalRef = document.querySelector('.modal-holder');
 const closeBtnRef = document.querySelector('.cross');
 const cardList = document.querySelector('.js-films-list-library');
-const modalCloseBtnRef = document.querySelector('.modal-holder');
 
-modalCloseBtnRef.addEventListener('click', scrollOff);
 modalHolder.addEventListener('click', onClickModalHolder);
 closeBtnRef.addEventListener('click', onCloseModal);
-
-function scrollOff() {
-  modalCloseBtnRef.classList.add('is-hidden');
-  document.body.style.overflow = 'visible';
-}
 
 function onCloseModal() {
   modalHolder.classList.add('is-hidden');
