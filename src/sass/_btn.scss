@@ -27,11 +27,11 @@
   display: flex;
   text-align: center;
   justify-content: center;
+  align-items: center;
 
   @media screen and (max-width: 767px) {
     margin-top: 62px;
   }
-
 }
 
 .library__button {
@@ -70,7 +70,6 @@
   background-color: var(--accent-color);
   border-color: var(--accent-color);
 }
-
 
 .back_to_top {
   width: 60px;
