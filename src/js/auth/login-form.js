@@ -207,6 +207,7 @@ export function onLogOut() {
 
 export function onShowAuthModal() {
   formBackdropRef.classList.remove('is-hidden');
+  document.body.style.overflow = 'hidden';
   window.addEventListener('keydown', onPressESC);
 }
 
@@ -218,6 +219,7 @@ export function onShowAuthModalFromFilmModal() {
 
 function onCloseModal() {
   formBackdropRef.classList.add('is-hidden');
+  document.body.style.overflow = 'visible';
   refs.frame.removeAttribute('movie-id');
   window.removeEventListener('keydown', onPressESC);
   refs.btnAnimateDiv.classList.remove('btn-animate-grow');

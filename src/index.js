@@ -63,7 +63,7 @@ popularNessesaryFilm(refs.input.value);
 function popularNessesaryFilm(inputVal) {
   if (inputVal !== '') {
     saveInputLocalStorage(refs.input.value);
-    console.log(parsePaginationLocalStorage());
+
     murkupSearchMovie(
       parseInputLocalStorege(),
       parsePaginationLocalStorage() || api.getStartPage()
@@ -169,6 +169,7 @@ function murkupSearchMovie(filmName, page) {
 }
 
 function createFilmCardMarkup(films) {
+  api.isLibrary = false;
   const newMarkup = films
     .map(film => {
       const {
@@ -268,3 +269,5 @@ onAuthStateChanged(auth, user => {
 // api.getMovie('bullet').then(console.log);
 // api.getMovieInfo('913290').then(console.log);
 // api.getMovieTrailers('913290').then(console.log);
+// ".read": "now < 1669068000000",  // 2022-11-22
+//     ".write": "now < 1669068000000",  // 2022-11-22

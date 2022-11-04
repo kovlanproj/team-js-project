@@ -3,6 +3,7 @@ import { onShowAuthModalFromFilmModal } from './auth/login-form';
 import { readData, insertData, deleteData } from './firebase/db-service';
 import { onPosterClick } from './showTrailer.js';
 import MovieApiService from './movie-service';
+import { libraryList } from './renderLibraryList';
 import refs from './refs';
 
 const api = new MovieApiService();
@@ -24,20 +25,33 @@ function fetchFilmPhoto(posterPath) {
 const modalHolder = document.querySelector('.modal-holder');
 const modalBtnWrap = document.querySelector('.modal-btn-wrap');
 const modalRef = document.querySelector('.modal-holder');
+
 const posterRef = document.querySelector('.js-poster');
 const trailerBtnRef = document.querySelector('.show-trailer-btn');
 
 modalHolder.addEventListener('click', onClickModalHolder);
 trailerBtnRef.addEventListener('click', onPosterClick);
 
+const closeBtnRef = document.querySelector('.cross');
+const cardList = document.querySelector('.js-films-list-library');
+
+modalHolder.addEventListener('click', onClickModalHolder);
+closeBtnRef.addEventListener('click', onCloseModal);
+
 function onCloseModal() {
   modalHolder.classList.add('is-hidden');
   window.removeEventListener('keydown', onPressESC);
+  document.body.style.overflow = 'visible';
+  if (api.isChanged && cardList) {
+    libraryList(cardList.getAttribute('type'));
+    api.isChanged = false;
+  }
 }
 
 function onClickModalHolder(e) {
   if (e.target.classList.contains('modal-holder')) {
     onCloseModal();
+    document.body.style.overflow = 'visible';
   }
 }
 
@@ -68,6 +82,7 @@ export function updateButtons(id) {
 
 function onWatchBtnClick() {
   const watchBtn = modalRef.querySelector('.film-js-watch');
+  api.isChanged = true;
   if (watchBtn.hasAttribute('in-list')) {
     deleteData(watchBtn.getAttribute('key'), 'watchlist').then(() => {
       watchBtn.textContent = 'add to watched';
@@ -96,6 +111,7 @@ function onWatchBtnClick() {
 }
 
 function onQueueBtnClick() {
+  api.isChanged = true;
   const queueBtn = modalRef.querySelector('.film-js-queue');
   if (queueBtn.hasAttribute('in-list')) {
     deleteData(queueBtn.getAttribute('key'), 'queue').then(() => {
@@ -139,8 +155,6 @@ function onQueueBtnClick() {
 function checkAddedMovieInList(id, array) {
   return array.find(elem => elem.val === id);
 }
-
-// readData('watchlist').then(array => {});
 
 export async function showInfoModal(api, id) {
   chooseTrailer(id).then(trailers => {
@@ -206,5 +220,6 @@ export async function showInfoModal(api, id) {
   }
 
   modalRef.classList.remove('is-hidden');
+  document.body.style.overflow = 'hidden';
   window.addEventListener('keydown', onPressESC);
 }
