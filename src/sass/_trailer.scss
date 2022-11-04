@@ -1,15 +1,18 @@
+.trailer-holder {
+  overflow-y: scroll;
+}
+
 .trailer-container {
   padding: 40px;
   display: flex;
   justify-content: center;
   align-items: center;
   flex-direction: column;
-  overflow-y: scroll;
 }
 
 .trailer-item {
-  //   width: 560px;
-  //   height: 315px;
+  // max-width: 720px;
+  // height: auto;
   display: flex;
   justify-content: center;
   align-items: center;
