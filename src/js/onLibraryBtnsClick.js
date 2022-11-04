@@ -20,7 +20,6 @@ function onLibraryBtnsClick(evt) {
     libraryQueueBtn.classList.remove('is-active');
     if (evt.target.classList.contains('is-active')) {
       api.setType('watchlist');
-      localStorage.setItem('typeList', 'watchlist');
       libraryList(api.getType());
     }
     return;
@@ -31,7 +30,7 @@ function onLibraryBtnsClick(evt) {
     libraryQueueBtn.classList.add('is-active');
     if (evt.target.classList.contains('is-active')) {
       api.setType('queue');
-      localStorage.setItem('typeList', 'queue');
+
       libraryList(api.getType());
     }
     return;
