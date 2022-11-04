@@ -1,15 +1,10 @@
 import MovieApiService from './movie-service';
+import { chooseTrailer } from './model-info-film';
 import refs from './refs';
 
 refs.trailerBackdrop.addEventListener('click', onBackdropClick);
 
 const api = new MovieApiService();
-
-async function chooseTrailer(id) {
-  const res = await api.getMovieTrailers(id);
-  const trailers = res.filter(res => res.type === 'Trailer');
-  return trailers.map(trailer => trailer.key);
-}
 
 export function onPosterClick(e) {
   const id = e.target.getAttribute('data-id');

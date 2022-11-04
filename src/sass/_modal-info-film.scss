@@ -78,6 +78,7 @@
 }
 
 .modal-img-container {
+  position: relative;
   margin-bottom: 20px;
   @media screen and (min-width: 480px) {
     margin-left: 54px;
@@ -355,4 +356,14 @@
   font-weight: 500;
   font-size: 14px;
   line-height: 1.33;
+}
+
+.show-trailer-btn {
+  position: absolute;
+  bottom: 30px;
+  left: 50%;
+  transform: translateX(-50%);
+  &.is-hidden {
+    display: none;
+  }
 }

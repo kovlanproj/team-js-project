@@ -2,7 +2,16 @@ import { auth } from './firebase/auth';
 import { onShowAuthModalFromFilmModal } from './auth/login-form';
 import { readData, insertData, deleteData } from './firebase/db-service';
 import { onPosterClick } from './showTrailer.js';
+import MovieApiService from './movie-service';
 import refs from './refs';
+
+const api = new MovieApiService();
+
+export async function chooseTrailer(id) {
+  const res = await api.getMovieTrailers(id);
+  const trailers = res.filter(res => res.type === 'Trailer');
+  return trailers.map(trailer => trailer.key);
+}
 
 function fetchFilmPhoto(posterPath) {
   const noPosterAvaliable =
@@ -16,9 +25,10 @@ const modalHolder = document.querySelector('.modal-holder');
 const modalBtnWrap = document.querySelector('.modal-btn-wrap');
 const modalRef = document.querySelector('.modal-holder');
 const posterRef = document.querySelector('.js-poster');
+const trailerBtnRef = document.querySelector('.show-trailer-btn');
 
 modalHolder.addEventListener('click', onClickModalHolder);
-posterRef.addEventListener('click', onPosterClick);
+trailerBtnRef.addEventListener('click', onPosterClick);
 
 function onCloseModal() {
   modalHolder.classList.add('is-hidden');
@@ -133,6 +143,13 @@ function checkAddedMovieInList(id, array) {
 // readData('watchlist').then(array => {});
 
 export async function showInfoModal(api, id) {
+  chooseTrailer(id).then(trailers => {
+    if (trailers.length > 0) {
+      trailerBtnRef.classList.remove('is-hidden');
+      trailerBtnRef.setAttribute('data-id', id);
+    }
+  });
+
   const data = await api.getMovieInfo(id);
 
   modalRef
