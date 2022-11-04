@@ -1,0 +1,28 @@
+.trailer-holder {
+  overflow-y: scroll;
+}
+
+.trailer-container {
+  padding: 40px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+
+.trailer-item {
+  // max-width: 720px;
+  // height: auto;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 0 auto;
+
+  border: 2px solid #ff6b08;
+  border-radius: 8px;
+  overflow: hidden;
+
+  &:not(:last-child) {
+    margin-bottom: 20px;
+  }
+}

@@ -3,6 +3,9 @@
   width: 100%;
   height: 100%;
   background-color: rgba(0, 0, 0, 0.5);
+  &.trailer-holder {
+    background-color: rgba(0, 0, 0, 0.9);
+  }
   position: fixed;
   top: 0;
   transition: opacity 300ms, visibility 300ms;
@@ -18,18 +21,24 @@
   border-radius: 5px;
   border: 1px solid #000;
   overflow: hidden;
-  box-shadow: 0px 1px 3px rgba(0, 0, 0, 0.12), 0px 1px 1px rgba(0, 0, 0, 0.14), 0px 2px 1px rgba(0, 0, 0, 0.2);
+  box-shadow: 0px 1px 3px rgba(0, 0, 0, 0.12), 0px 1px 1px rgba(0, 0, 0, 0.14),
+    0px 2px 1px rgba(0, 0, 0, 0.2);
   height: 100%;
   max-width: 400px;
-  background: rgb(2,0,36);
-  background: linear-gradient(90deg, rgba(2,0,36,1) 0%, rgba(87,13,13,1) 50%, rgba(0,0,0,1) 100%);
+  background: rgb(2, 0, 36);
+  background: linear-gradient(
+    90deg,
+    rgba(2, 0, 36, 1) 0%,
+    rgba(87, 13, 13, 1) 50%,
+    rgba(0, 0, 0, 1) 100%
+  );
   position: relative;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
   padding: 40px;
   overflow-y: auto;
-  @include mq(tablet){
+  @include mq(tablet) {
     max-width: 750px;
   }
   @include mq(desktop) {
@@ -38,7 +47,7 @@
 }
 
 .team__members {
-  color: #FFFFFF;
+  color: #ffffff;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -47,7 +56,7 @@
 }
 
 .team__title {
-  color: #FFFFFF;
+  color: #ffffff;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -56,11 +65,10 @@
   font-weight: 700;
 }
 
-
 .team__info {
-  color: #FFFFFF;
+  color: #ffffff;
   padding-left: 5px;
-  box-shadow: 0 2px 2px #FFFFFF;
+  box-shadow: 0 2px 2px #ffffff;
   padding-bottom: 20px;
   margin-bottom: 15px;
   display: flex;
@@ -69,7 +77,7 @@
   align-items: center;
 }
 // .team__wrapper {
-  
+
 // }
 
 .team__list {
@@ -82,12 +90,15 @@
 
 .team__list-item {
   overflow: hidden;
-  outline: 2px solid rgba(87,13,13,1);
+
+  outline: 2px solid rgba(87, 13, 13, 1);
+
   border-radius: 8px;
-  background-color: #FFFFFF;
+  background-color: #ffffff;
   width: 220px;
   margin-bottom: 10px;
-  box-shadow: 0px 1px 3px rgba(0, 0, 0, 0.12), 0px 1px 1px rgba(0, 0, 0, 0.14), 0px 2px 1px rgba(0, 0, 0, 0.2);
+  box-shadow: 0px 1px 3px rgba(0, 0, 0, 0.12), 0px 1px 1px rgba(0, 0, 0, 0.14),
+    0px 2px 1px rgba(0, 0, 0, 0.2);
   transition-duration: 250ms;
   transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
 }
@@ -129,8 +140,8 @@
   fill: black;
   width: 35px;
   height: 35px;
-  border: 1px solid ;
-  background-color: #FFFFFF;
+  border: 1px solid;
+  background-color: #ffffff;
   border-radius: 50%;
   position: absolute;
   top: 15px;
@@ -143,10 +154,10 @@
   transition-duration: 250ms;
   transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
   &:hover {
-      fill: #2196F3;
+    fill: #2196f3;
   }
   &:focus {
-      fill: #2196F3;
+    fill: #2196f3;
   }
 }
 
@@ -165,8 +176,7 @@
   height: 243px;
 }
 
-.team__wrapper{
+.team__wrapper {
   height: 900px;
   // overflow-y: auto;
 }
-

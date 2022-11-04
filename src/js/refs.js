@@ -26,4 +26,8 @@ export default {
   infoModal: document.querySelector('.modal-holder'),
   modalBtnWrap: document.querySelector('.modal-btn-wrap'),
   filmsContainer: document.querySelector('.loader-container'),
+
+  //trailer
+  trailerBackdrop: document.querySelector('.trailer-holder'),
+  trailerContainer: document.querySelector('.trailer-container'),
 };

@@ -45,7 +45,7 @@ export default class MovieApiService {
     const response = await axios.get(
       `${BASE_URL}/movie/${id}/videos?api_key=${API_KEY}&language=${lang}`
     );
-    return response.data;
+    return response.data.results;
   }
 
   setIsLibrary(isLibrary) {

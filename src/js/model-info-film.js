@@ -1,9 +1,18 @@
 import { auth } from './firebase/auth';
 import { onShowAuthModalFromFilmModal } from './auth/login-form';
 import { readData, insertData, deleteData } from './firebase/db-service';
+import { onPosterClick } from './showTrailer.js';
 import MovieApiService from './movie-service';
 import { libraryList } from './renderLibraryList';
+import refs from './refs';
+
 const api = new MovieApiService();
+
+export async function chooseTrailer(id) {
+  const res = await api.getMovieTrailers(id);
+  const trailers = res.filter(res => res.type === 'Trailer');
+  return trailers.map(trailer => trailer.key);
+}
 
 function fetchFilmPhoto(posterPath) {
   const noPosterAvaliable =
@@ -16,6 +25,13 @@ function fetchFilmPhoto(posterPath) {
 const modalHolder = document.querySelector('.modal-holder');
 const modalBtnWrap = document.querySelector('.modal-btn-wrap');
 const modalRef = document.querySelector('.modal-holder');
+
+const posterRef = document.querySelector('.js-poster');
+const trailerBtnRef = document.querySelector('.show-trailer-btn');
+
+modalHolder.addEventListener('click', onClickModalHolder);
+trailerBtnRef.addEventListener('click', onPosterClick);
+
 const closeBtnRef = document.querySelector('.cross');
 const cardList = document.querySelector('.js-films-list-library');
 
@@ -44,8 +60,9 @@ function onPressESC(e) {
   const isEscKey = e.code === ESC_KEY_CODE;
 
   if (isEscKey) {
-    onCloseModal();
-    document.body.style.overflow = 'visible';
+    if (refs.trailerBackdrop.classList.contains('is-hidden')) {
+      onCloseModal();
+    }
   }
 }
 
@@ -140,6 +157,13 @@ function checkAddedMovieInList(id, array) {
 }
 
 export async function showInfoModal(api, id) {
+  chooseTrailer(id).then(trailers => {
+    if (trailers.length > 0) {
+      trailerBtnRef.classList.remove('is-hidden');
+      trailerBtnRef.setAttribute('data-id', id);
+    }
+  });
+
   const data = await api.getMovieInfo(id);
 
   modalRef
@@ -164,6 +188,7 @@ export async function showInfoModal(api, id) {
   modalRef.querySelector('.film-film-description').innerHTML = data.overview;
 
   modalRef.querySelector('.modal-btn-wrap').setAttribute('data-id', id);
+  posterRef.setAttribute('data-id', id);
 
   if (auth.currentUser) {
     const watchlist = await readData('watchlist');
