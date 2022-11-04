@@ -6,34 +6,25 @@ import {
   onAuthStateChanged,
 } from 'firebase/auth';
 import refs from './js/refs';
-import { removeAuthBtns, renderNav, addLogOutButton } from './js/auth/auth-nav';
+import {
+  addAuthBtns,
+  removeAuthBtns,
+  addNav,
+  removeNav,
+  renderNav,
+  addLogOutButton,
+} from './js/auth/auth-nav';
 import { insertData, readData } from './js/firebase/db-service';
 import './js/onLibraryBtnsClick';
 import { libraryList } from './js/renderLibraryList';
-const libraryWatchedBtn = document.querySelector('.library__watched-btn');
-const libraryQueueBtn = document.querySelector('.library__queue-btn');
-
-if (localStorage.getItem('typeList') === 'queue') {
-  libraryQueueBtn.classList.add('is-active');
-} else {
-  libraryWatchedBtn.classList.add('is-active');
-}
 
 renderNav('library');
-
 const api = new MovieApiService();
 api.setType('watchlist');
 onAuthStateChanged(auth, user => {
   if (user) {
     const uid = user.uid;
-    if (localStorage.getItem('typeList') === 'queue') {
-      libraryQueueBtn.classList.add('is-active');
-      libraryList('queue');
-    } else {
-      libraryWatchedBtn.classList.add('is-active');
-      libraryList(api.getType());
-    }
-
+    libraryList(api.getType());
     localStorage.setItem('auth', 1);
     removeAuthBtns();
     addLogOutButton();
