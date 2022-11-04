@@ -10,7 +10,7 @@ import refs from './refs';
 const api = new MovieApiService();
 const cardList = document.querySelector('.js-films-list-library');
 const paginationList = document.querySelector('.tui-pagination');
-paginationList.addEventListener('click', onClickBtnPagination);
+paginationList.addEventListener('click', ClickBtnPagination);
 let size = 20; //размер подмассива
 let subarray = [];
 
@@ -48,15 +48,18 @@ export function renderLibraryList(list, type) {
         }
 
         pagination.reset(subarray.length * 10);
-        createFilmCardMarkup(subarray[api.page - 1], type);
+        createFilmCardMarkupLib(subarray[api.page - 1], type);
         pagination.movePageTo(api.page);
       })
       .catch(console.log);
   }
 }
 
-function onClickBtnPagination() {
+function ClickBtnPagination() {
   api.page = pagination.getCurrentPage();
+  if (window.location.pathname === '/index.html') {
+    return
+  }
   window.scrollTo({
     top: 0,
     left: 0,
@@ -65,7 +68,7 @@ function onClickBtnPagination() {
   libraryList(api.getType());
 }
 
-function createFilmCardMarkup(films, type) {
+function createFilmCardMarkupLib(films, type) {
   const newMarkup = films
     .map(film => {
       const {
@@ -92,11 +95,11 @@ function createFilmCardMarkup(films, type) {
                             <h2 class="film-card__title">${original_title}</h2>
                             <div class="film-card__wrapper">
                                 <span class="film-card__info">${getGenres(
-                                  fIlmIds
-                                ).join(', ')} | ${year}</span>
+        fIlmIds
+      ).join(', ')} | ${year}</span>
                                 <span data-film-rating class="film-card__rating">${vote_average.toFixed(
-                                  2
-                                )}</span>
+        2
+      )}</span>
                             </div>
                         </div>
                     </li>`;

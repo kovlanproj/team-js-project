@@ -1,14 +1,14 @@
 .films {
   display: flex;
   justify-content: center;
+  min-height: 50vh;
 
   &__container {
     padding-top: 60px;
     padding-bottom: 60px;
 
     @include mq(tablet) {
-      // margin-top: 45px;
-      // margin-bottom: 45px;
+      min-height: 100vh;
     }
   }
 
