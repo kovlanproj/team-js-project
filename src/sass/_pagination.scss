@@ -117,7 +117,7 @@
 }
 
 #tui-pagination-container strong {
-  background: #FF6B08;
+  background: #ff6b08;
 }
 
 #tui-pagination-container .tui-page-btn {
@@ -147,11 +147,11 @@
 #tui-pagination-container .tui-icon-prev,
 #tui-pagination-container .tui-last-child {
   @include mq(mobile) {
-    display: none;
+    // display: none;
   }
 
   @include mq(tablet) {
-    display: inline;
+    // display: inline;
   }
 }
 
@@ -159,5 +159,5 @@
 .tui-ico-prev,
 .tui-ico-next,
 .tui-ico-last {
-  filter: brightness(.5)contrast(1.2);
+  filter: brightness(0.5) contrast(1.2);
 }
